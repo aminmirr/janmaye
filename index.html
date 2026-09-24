@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>خلاصه‌های صوتی کتاب</title>
+<title>جان‌مایه — خلاصه‌های صوتی کتاب</title>
 <link rel="icon" href="icon.png">
 <link rel="apple-touch-icon" href="icon.png">
 <meta name="theme-color" content="#0E1519">
 <meta name="description" content="مرور صوتیِ کتاب‌ها به فارسی، برای رسیدن سریع به اصل حرفِ کتاب — از جمله کتاب‌هایی که هنوز ترجمه‌ی فارسی ندارند. ساخته‌شده با NotebookLM و با کمک Claude code و Github. جایگزینِ خواندنِ کتاب نیست.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="خلاصه‌های صوتی کتاب">
+<meta property="og:title" content="جان‌مایه — خلاصه‌های صوتی کتاب">
 <meta property="og:description" content="مرور صوتیِ کتاب‌ها به فارسی، برای رسیدن سریع به اصل حرفِ کتاب — از جمله کتاب‌هایی که هنوز ترجمه‌ی فارسی ندارند.">
-<meta property="og:url" content="https://aminmirr.github.io/book-podcasts/">
-<meta property="og:image" content="https://aminmirr.github.io/book-podcasts/og.png">
+<meta property="og:url" content="https://aminmirr.github.io/janmaye/">
+<meta property="og:image" content="https://aminmirr.github.io/janmaye/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -402,7 +402,7 @@ footer a:hover{ color:var(--paper); }
     <span>
       <a id="suggest" target="_blank" rel="noopener" data-i18n="suggest"></a>
       &nbsp;·&nbsp;
-      <a id="repoLink" href="https://github.com/aminmirr/book-podcasts" target="_blank" rel="noopener">GitHub</a>
+      <a id="repoLink" href="https://github.com/aminmirr/janmaye" target="_blank" rel="noopener">GitHub</a>
     </span>
   </footer>
 </div>
@@ -561,7 +561,7 @@ footer a:hover{ color:var(--paper); }
 
 <script>
 const T = {
-fa:{ mark:"خلاصه‌های صوتی",
+fa:{ mark:"جان‌مایه",
   eyebrow:"کتابخانه‌ی شنیدنی · ساخته‌شده با NotebookLM",
   headline:'اصلِ کتاب را بشنو — <em>حتی اگر ترجمه نشده</em>.',
   standfirst:"مرور صوتیِ کتاب‌ها به فارسی، برای رسیدن سریع به اصل حرفِ کتاب — از جمله کتاب‌هایی که هنوز به فارسی ترجمه نشده‌اند. ساخته‌شده با هوش مصنوعی (NotebookLM). جایگزینِ خواندنِ خودِ کتاب نیست.",
@@ -598,7 +598,7 @@ fa:{ mark:"خلاصه‌های صوتی",
   footnote:"صدا با NotebookLM · میزبانی روی GitHub Releases",
   hour:"ساعت", minute:"دقیقه", chShort:"فصل",
   continue:"ادامه", continueTitle:"ادامه‌ی شنیدن" },
-en:{ mark:"Audio summaries",
+en:{ mark:"Janmaye",
   eyebrow:"A listening library · made with NotebookLM",
   headline:'Get the heart of a book — <em>even the untranslated ones</em>.',
   standfirst:"Audio overviews of books in Persian, built to get you to the core of a book fast — including books with no official Persian translation. Made with AI (NotebookLM). Not a substitute for reading the book itself.",
@@ -796,7 +796,7 @@ function render(){
   document.documentElement.lang=LANG;
   document.documentElement.dir=LANG==="fa"?"rtl":"ltr";
   document.documentElement.dataset.lang=LANG;
-  document.title = LANG==="fa" ? "خلاصه‌های صوتی کتاب" : "Audio Book Summaries";
+  document.title = LANG==="fa" ? "جان‌مایه — خلاصه‌های صوتی کتاب" : "Janmaye — Audio Book Summaries";
   $$("[data-i18n]").forEach(e=>e.textContent=L[e.dataset.i18n]||"");
   $$("[data-i18n-label]").forEach(e=>e.setAttribute("aria-label",L[e.dataset.i18nLabel]||""));
   $$("[data-i18n-ph]").forEach(e=>e.placeholder=L[e.dataset.i18nPh]||"");
@@ -1348,7 +1348,7 @@ async function castVote(slug,value){
 
 /* ---------------- suggestion sheet (choose → GitHub or anonymous) ---------------- */
 const dlg=$("#suggestDlg"), sForm=$("#suggestForm"), sMsg=$("#suggestMsg");
-const REPO_URL="https://github.com/aminmirr/book-podcasts";
+const REPO_URL="https://github.com/aminmirr/janmaye";
 // withStar → append the "go back and click Star" reminder to the issue body
 const issueUrl=withStar=> REPO_URL+"/issues/new?labels=suggestion"
   + "&title="+encodeURIComponent(t().issueTitle)

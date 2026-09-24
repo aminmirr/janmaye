@@ -33,6 +33,10 @@ from pathlib import Path
 BOOKS_ROOT = Path.home() / "Downloads" / "notebookLM"
 SITE_DIR = Path(__file__).resolve().parent
 MANIFEST = SITE_DIR / "manifest.json"
+# Audio hosting stays on the original repo forever, independent of wherever
+# this script (and the site's own files) live — rebranding the site must
+# never re-upload or move any existing episode's audio.
+AUDIO_REPO = "aminmirr/book-podcasts"
 # Shared with the book_podcast generator repo and check_translations.py's --register —
 # a book can be researched before it's even been fed to the generator.
 TRANSLATION_RESEARCH_FILE = BOOKS_ROOT / "_translation_research.json"
@@ -45,15 +49,7 @@ def slugify(name: str) -> str:
 
 
 def owner_repo() -> str:
-    url = subprocess.run(
-        ["git", "-C", str(SITE_DIR), "remote", "get-url", "origin"],
-        capture_output=True, text=True, check=True,
-    ).stdout.strip()
-    # git@github.com:owner/repo.git  or  https://github.com/owner/repo(.git)
-    m = re.search(r"github\.com[:/]([^/]+/[^/]+?)(?:\.git)?$", url)
-    if not m:
-        sys.exit(f"can't parse owner/repo from remote: {url}")
-    return m.group(1)
+    return AUDIO_REPO
 
 
 def episode_title(filename: str) -> str:

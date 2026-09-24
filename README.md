@@ -1,9 +1,14 @@
-# Book Podcasts
+# جان‌مایه (Janmaye)
 
 A static site listing AI-generated podcast summaries of books (English + Persian),
 made with [NotebookLM](https://notebooklm.google.com/).
 
-**Live:** https://aminmirr.github.io/book-podcasts/ · GitHub Pages off `main`.
+**Live:** https://aminmirr.github.io/janmaye/ · GitHub Pages off `main`.
+
+Formerly `book-podcasts`. That repo still exists — it's kept alive permanently
+as the audio host (see the Audio row below) and, at its own GitHub Pages
+address, a static handoff page pointing here. Nothing about the rebrand moved
+or re-uploaded any existing episode.
 
 Each book has one **whole-book** episode (standalone overview) plus one episode
 **per chapter**. Two languages per book where available.
@@ -13,7 +18,7 @@ Each book has one **whole-book** episode (standalone overview) plus one episode
 | Layer | Where | Notes |
 |-------|-------|-------|
 | Site | `index.html` (single file, no build step) | Reads `manifest.json` + `books.meta.json` at load |
-| Audio | **GitHub Releases** (one release per book, tag `book-<slug>`) | 64k mono AAC; never enters git |
+| Audio | **GitHub Releases on `aminmirr/book-podcasts`** (one release per book, tag `book-<slug>`) — see `AUDIO_REPO` in `build_site.py` | 64k mono AAC; never enters git; hosted separately from this repo on purpose |
 | Generated data | `manifest.json` | episodes, URLs, **durations** — do not hand-edit |
 | Editable data | `books.meta.json` | titles, author, cover, notes, categories, chapter titles |
 | Covers | `covers/*` | referenced from `books.meta.json` |
