@@ -47,11 +47,6 @@ html[data-lang="fa"] .mono{ font-family:'Vazirmatn',sans-serif; letter-spacing:0
 .masthead{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:26px 0; }
 .mark{ display:flex; align-items:center; gap:10px; color:var(--haze); }
 .mark-dot{ width:9px; height:9px; border-radius:50%; background:var(--accent); transition:background .45s ease; }
-.langswitch{ display:flex; border:1px solid var(--line); border-radius:999px; overflow:hidden; background:var(--ink-raise); }
-.langswitch button{ font:inherit; background:none; border:0; cursor:pointer; color:var(--haze);
-  padding:7px 16px; font-size:.8rem; transition:color .2s,background .2s; }
-.langswitch button[aria-pressed="true"]{ color:var(--ink); background:var(--accent); }
-.langswitch button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 
 /* hero */
 .hero{ padding-block:clamp(52px,10vw,100px) clamp(36px,6vw,64px); }
@@ -100,6 +95,17 @@ html[data-lang="fa"] .no-fa span{ font-family:'Vazirmatn',sans-serif; font-weigh
   text-transform:none; letter-spacing:0; font-size:.52rem; max-width:46px; }
 .book-author{ color:var(--haze); margin-top:10px; font-size:.9rem; }
 .book-author::before{ content:"—  "; opacity:.6; }
+
+/* per-book language — which of that book's two audio languages you're
+   browsing/listening to. Small and scoped, unlike the old site-wide toggle. */
+.book-lang{ display:inline-flex; border:1px solid var(--line); border-radius:999px;
+  overflow:hidden; margin-top:12px; }
+.book-lang button{ font:inherit; font-family:'Vazirmatn',sans-serif; background:none; border:0;
+  cursor:pointer; color:var(--haze); padding:5px 13px; font-size:.75rem;
+  transition:color .2s,background .2s; }
+.book-lang button[aria-pressed="true"]{ color:var(--ink); background:var(--accent); }
+.book-lang button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
 .book-note{ margin-top:14px; font-size:.95rem;
   color:color-mix(in srgb,var(--paper) 74%,var(--ink)); }
 
@@ -363,10 +369,6 @@ footer a:hover{ color:var(--paper); }
 <div class="wrap">
   <header class="masthead">
     <div class="mark"><span class="mark-dot" aria-hidden="true"></span><span class="mono" data-i18n="mark"></span></div>
-    <div class="langswitch" role="group" aria-label="Language">
-      <button type="button" data-setlang="fa" aria-pressed="true">فارسی</button>
-      <button type="button" data-setlang="en" aria-pressed="false">English</button>
-    </div>
   </header>
 
   <section class="hero">
@@ -422,6 +424,7 @@ footer a:hover{ color:var(--paper); }
     <div class="ptime"><span id="pCur">0:00</span> / <span id="pDur">0:00</span></div>
     <button type="button" class="pbtn" id="pShare" data-i18n-label="share"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg></button>
     <button type="button" class="pbtn" id="pDl" data-i18n-label="download"><svg viewBox="0 0 16 16"><path d="M7.2 1h1.6v7.1l2.5-2.5 1.1 1.1L8 11.3 3.6 6.8l1.1-1.1 2.5 2.5zM3 13h10v1.5H3z"/></svg></button>
+    <button type="button" class="pspeed" id="plang" aria-label="زبان این کتاب">فا</button>
     <button type="button" class="pspeed" id="speed" data-i18n-label="speed">1×</button>
     <button type="button" class="pbtn" id="close" data-i18n-label="close"><svg viewBox="0 0 16 16"><path d="M12.7 4.4 9.1 8l3.6 3.6-1.1 1.1L8 9.1l-3.6 3.6-1.1-1.1L6.9 8 3.3 4.4l1.1-1.1L8 6.9l3.6-3.6z"/></svg></button>
   </div>
@@ -597,47 +600,21 @@ fa:{ mark:"جان‌مایه",
   notfound:"فایل صوتی پیدا نشد",
   footnote:"صدا با NotebookLM · میزبانی روی GitHub Releases",
   hour:"ساعت", minute:"دقیقه", chShort:"فصل",
-  continue:"ادامه", continueTitle:"ادامه‌ی شنیدن" },
-en:{ mark:"Janmaye",
-  eyebrow:"A listening library · made with NotebookLM",
-  headline:'Get the heart of a book — <em>even the untranslated ones</em>.',
-  standfirst:"Audio overviews of books in Persian, built to get you to the core of a book fast — including books with no official Persian translation. Made with AI (NotebookLM). Not a substitute for reading the book itself.",
-  sBooks:"books", sEps:"episodes", sListen:"listening time",
-  whole:"Full summary", chapters:"chapters", showToc:"Chapter list", hideToc:"Hide chapters",
-  all:"All", dlWhole:"Download full summary",
-  suggest:"Suggest a book",
-  sgLead:"How would you like to suggest a book?",
-  sgGithub:"Continue with GitHub", sgAnon:"Suggest without logging in",
-  sgStarH:"Star the project?",
-  sgStarLead:"A star helps other people discover it. Want to star it while you're here?",
-  sgStarYes:"Yes, star it ⭐", sgStarNo:"No, just suggest",
-  sgOpenH:"One last step ⭐",
-  sgOpenLead:"Submit your suggestion, then come back to this page and tap below to star the project:",
-  sgStarLink:"⭐ Go to starring page", sgOpenIssue:"✍️ Open the suggestion page",
-  issueTitle:"Book suggestion: ",
-  issueBody:"Book title:\nAuthor:\nLanguage (Persian/English):\nWhy?\n",
-  starNote:"\n\n— After you submit, go back to the main page and tap “Go to starring page” to give the project a ⭐. Thank you! 🙏",
-  fTitle:"Book title *", fAuthor:"Author", fWhy:"Why this book?",
-  cancel:"Cancel", send:"Send", sending:"Sending…",
-  sent:"Thanks! Your suggestion was saved.", sendErr:"Couldn't send — try again.",
-  like:"Like", dislike:"Dislike",
-  play:"Play", pause:"Pause", prev:"Previous", next:"Next", close:"Close", download:"Download",
-  share:"Share", copyLink:"Copy link", copied:"Copied",
-  dlAll:"Download all", files:"files", mb:"MB",
-  searchPh:"Search books or chapters…", clear:"Clear", noResults:"Nothing found for",
-  back15:"Back 15 seconds", fwd15:"Forward 15 seconds", speed:"Playback speed",
-  missing:"Not ready yet",
-  noFa:"No official Persian translation",
-  loading:"Loading…",
-  error:"Couldn't load the list. Check that manifest.json sits next to this page.",
-  empty:"No books yet.",
-  notfound:"Audio file not found",
-  footnote:"Audio by NotebookLM · hosted on GitHub Releases",
-  hour:"h", minute:"min", chShort:"Ch.",
-  continue:"Continue", continueTitle:"Continue listening" }
+  continue:"ادامه", continueTitle:"ادامه‌ی شنیدن" }
 };
 
-let LANG = localStorage.getItem("abs-lang") || "fa";
+/* Per-book language: this is a Persian site (chrome, browsing, search) that
+   carries both English and Persian audio per book. Chrome text is always
+   Persian; each book independently remembers which language it's being
+   listened to in. See docs/superpowers/specs/2026-09-25-per-book-language.md */
+let bookLang = {};
+try{ bookLang = JSON.parse(localStorage.getItem("abs-book-lang") || "{}"); }catch{ bookLang = {}; }
+const getBookLang = slug => bookLang[slug] || "fa";
+function setBookLang(slug, lang){
+  bookLang[slug] = lang;
+  localStorage.setItem("abs-book-lang", JSON.stringify(bookLang));
+}
+
 let DATA = null;
 let META = {};   // slug -> hand-edited { title_en, title_fa, author, cover, note_en, note_fa }
 const audio = new Audio();
@@ -646,19 +623,19 @@ const refs = {};   // slug -> { segs:[], fills:[], whole, chs:[] }
 
 const $  = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
-const t  = ()=>T[LANG];
-const num = n => LANG==="fa" ? n.toLocaleString("fa-IR") : n.toLocaleString("en-US");
+const t  = ()=>T.fa;
+const num = n => n.toLocaleString("fa-IR");
 const esc = s => String(s??"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const langKey = ()=> LANG==="fa" ? "Persian" : "English";
+const langKey = lang => lang==="fa" ? "Persian" : "English";
 /* Whole megabytes: the number exists to set expectations before a long download,
    and a decimal implies a precision nobody acts on. */
 const mb = bytes => `${num(Math.round(bytes/1048576))} ${t().mb}`;
 const isWhole = ep => /whole_book/.test(ep.url);
 const chapKey = url => url.split("/").pop().replace(/\.m4a$/,"").replace(/_(en|fa)$/,"");
-function chTitle(slug, ep){
+function chTitle(slug, ep, lang){
   const chs = META[slug] && META[slug].chapters;
   const ov = chs && chs[chapKey(ep.url)];
-  if(ov){ return (LANG==="fa" ? ov.title_fa : ov.title_en) || ov.title_en || ep.title; }
+  if(ov){ return (lang==="fa" ? ov.title_fa : ov.title_en) || ov.title_en || ep.title; }
   return ep.title;
 }
 const bookCats = slug => (META[slug] && META[slug].categories) || [];
@@ -681,7 +658,11 @@ function matchBook(b){
   const head = [m.title_en, m.title_fa, b.title, m.author, m.note_en, m.note_fa,
                 ...bookCats(b.slug)];
   if(head.some(v => norm(v).includes(Q))) return { hit:true, viaChapter:false };
-  const inChapter = split(b).chapters.some(c => norm(chTitle(b.slug, c)).includes(Q));
+  // Both languages, always — there's no site-wide language for search to follow,
+  // and a book currently showing Persian chapters must still be found by an
+  // English chapter title (and vice versa).
+  const inChapter = ["fa","en"].some(lang =>
+    split(b, lang).chapters.some(c => norm(chTitle(b.slug, c, lang)).includes(Q)));
   return inChapter ? { hit:true, viaChapter:true } : null;
 }
 
@@ -697,14 +678,9 @@ const voterId=()=>{ let v=localStorage.getItem("abs-voter");
 function dur(secs){
   const mins = Math.round((secs||0)/60);
   const h=Math.floor(mins/60), m=mins%60, L=t();
-  if(LANG==="fa"){
-    if(h&&m) return `${num(h)} ${L.hour} و ${num(m)} ${L.minute}`;
-    if(h) return `${num(h)} ${L.hour}`;
-    return `${num(m)} ${L.minute}`;
-  }
-  if(h&&m) return `${h}${L.hour} ${m}${L.minute}`;
-  if(h) return `${h}${L.hour}`;
-  return `${m} ${L.minute}`;
+  if(h&&m) return `${num(h)} ${L.hour} و ${num(m)} ${L.minute}`;
+  if(h) return `${num(h)} ${L.hour}`;
+  return `${num(m)} ${L.minute}`;
 }
 function clock(s){
   if(!isFinite(s)) return "0:00";
@@ -723,8 +699,8 @@ const ICON_UP='<svg viewBox="0 0 16 16"><path d="M8 4l5 8H3z"/></svg>';
 const ICON_DOWN='<svg viewBox="0 0 16 16"><path d="M8 12 3 4h10z"/></svg>';
 
 /* split a book's episodes for the current language into {full, chapters[]} */
-function split(book){
-  const eps = (book.episodes && book.episodes[langKey()]) || [];
+function split(book, lang){
+  const eps = (book.episodes && book.episodes[langKey(lang)]) || [];
   return { full: eps.find(isWhole) || null,
            chapters: eps.filter(e=>!isWhole(e)) };
 }
@@ -770,7 +746,7 @@ function recordEntry(tr, position, duration, forcePlayed){
     position, duration,
     played: forcePlayed || (prev && prev.played) || shouldMarkPlayed(position, duration),
     at: Date.now(),
-    slug: tr.slug, lang: LANG, kind: tr.kind, idx: tr.idx, book: tr.book, label: tr.label,
+    slug: tr.slug, lang: tr.lang, kind: tr.kind, idx: tr.idx, book: tr.book, label: tr.label,
   };
   saveHistory(HISTORY);
 }
@@ -793,15 +769,11 @@ function forceRecordProgress(played){
 /* ---------------- render ---------------- */
 function render(){
   const L=t();
-  document.documentElement.lang=LANG;
-  document.documentElement.dir=LANG==="fa"?"rtl":"ltr";
-  document.documentElement.dataset.lang=LANG;
-  document.title = LANG==="fa" ? "جان‌مایه — خلاصه‌های صوتی کتاب" : "Janmaye — Audio Book Summaries";
+  document.title = "جان‌مایه — خلاصه‌های صوتی کتاب";
   $$("[data-i18n]").forEach(e=>e.textContent=L[e.dataset.i18n]||"");
   $$("[data-i18n-label]").forEach(e=>e.setAttribute("aria-label",L[e.dataset.i18nLabel]||""));
   $$("[data-i18n-ph]").forEach(e=>e.placeholder=L[e.dataset.i18nPh]||"");
   $("#headline").innerHTML=L.headline;
-  $$("[data-setlang]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.setlang===LANG)));
   if(!DATA) return;
 
   const books=DATA.books||[];
@@ -809,7 +781,10 @@ function render(){
 
   let eps=0, listen=0;
   books.forEach(b=>{
-    const {full,chapters}=split(b);
+    // Fixed to "fa" regardless of any book's current toggle state — a stat that
+    // jumped around every time a visitor flipped one book's language would be
+    // more confusing than useful.
+    const {full,chapters}=split(b, "fa");
     if(full){ eps++; listen += full.seconds||0; }
     chapters.forEach(c=>{ eps++; listen += c.seconds||0; });
   });
@@ -855,7 +830,9 @@ function renderCats(books){
 }
 
 function bookEl(b, openToc){
-  const L=t(), {full,chapters}=split(b);
+  const bLang = getBookLang(b.slug);
+  const bDir = bLang==="en" ? "ltr" : "rtl";
+  const L=t(), {full,chapters}=split(b, bLang);
   const el=document.createElement("article"); el.className="book"; el.id=b.slug;
   const chMin=chapters.reduce((s,c)=>s+(c.seconds||0),0);
 
@@ -864,7 +841,7 @@ function bookEl(b, openToc){
   const titleFa = m.title_fa || "";
   const author  = m.author || "";
   const cover   = m.cover || "";
-  const note    = (LANG==="fa" ? m.note_fa : m.note_en) || "";
+  const note    = (bLang==="fa" ? m.note_fa : m.note_en) || "";
   const noFa    = m.translated_fa === false;
 
   el.innerHTML=`
@@ -872,16 +849,20 @@ function bookEl(b, openToc){
       <div class="book-id">
         ${cover?`<img class="cover" src="${esc(cover)}" alt="" loading="lazy" onerror="this.remove()">`:""}
         <div class="titles">
-          <h2 class="book-title-en">${esc(titleEn)}${noFa?` <span class="no-fa"><span>${LANG==="fa"?"بدون ترجمه‌ی<br>رسمی فارسی":"No official<br>Persian translation"}</span></span>`:""}</h2>
+          <h2 class="book-title-en">${esc(titleEn)}${noFa?` <span class="no-fa"><span>بدون ترجمه‌ی<br>رسمی فارسی</span></span>`:""}</h2>
           ${titleFa?`<p class="book-title-fa">${esc(titleFa)}</p>`:""}
           ${author?`<p class="book-author">${esc(author)}</p>`:""}
+          <div class="book-lang" role="group" aria-label="زبان این کتاب">
+            <button type="button" data-book-lang="fa" aria-pressed="${bLang==="fa"}">فارسی</button>
+            <button type="button" data-book-lang="en" aria-pressed="${bLang==="en"}">English</button>
+          </div>
         </div>
       </div>
       <div class="book-side"></div>
-      ${note?`<p class="book-note">${esc(note)}</p>`:""}
+      ${note?`<p class="book-note" dir="${bDir}">${esc(note)}</p>`:""}
       <div class="book-cats"></div>
     </div>
-    <div class="spine-wrap">
+    <div class="spine-wrap" dir="${bDir}">
       <div class="spine" role="group" aria-label="${esc(L.chapters)}"></div>
       <div class="spine-meta">
         <button type="button" class="toc-toggle mono" data-slug="${esc(b.slug)}" aria-expanded="${openToc}">
@@ -894,9 +875,15 @@ function bookEl(b, openToc){
       <div class="toc" ${openToc?"":"hidden"}></div>
     </div>`;
 
+  $$("[data-book-lang]",el).forEach(btn=>btn.addEventListener("click",()=>{
+    const newLang=btn.dataset.bookLang;
+    if(newLang===bLang) return;
+    switchBookLang(b.slug, newLang);
+  }));
+
   // "download everything in this language" — a zip built at publish time and
   // shipped as a release asset. Absent for books published before zips existed.
-  const zip = (b.zips || {})[langKey()];
+  const zip = (b.zips || {})[langKey(bLang)];
   if(zip){
     const za=document.createElement("a");
     za.className="dl-all"; za.href=zip.url; za.setAttribute("download","");
@@ -947,9 +934,9 @@ function bookEl(b, openToc){
     w.addEventListener("click",()=>{
       R.expand();
       if(cur()?.slug===b.slug && cur()?.kind==="full"){ audio.paused?audio.play():audio.pause(); return; }
-      start([mkTrack(b,"full",full,0)],0);
+      start([mkTrack(b,"full",full,0,bLang)],0);
     });
-    side.append(w); R.whole=w; R.fullTrack=mkTrack(b,"full",full,0);
+    side.append(w); R.whole=w; R.fullTrack=mkTrack(b,"full",full,0,bLang);
     /* Right next to the play button, before the continue button — so on a
        book with something in progress (where the row wraps), download stays
        paired with "Full summary" on the first line instead of dropping to
@@ -966,8 +953,8 @@ function bookEl(b, openToc){
     if(continueEntry && continueEntry.kind!=="full"){
       const c=document.createElement("button");
       c.type="button"; c.className="whole"; c.dataset.on="0";
-      const label=`${L.continue}: ${continueEntry.label}`;
-      c.innerHTML=`${ICON_PLAY}<span>${esc(label)}</span><small>${dur(continueEntry.duration)}</small>`;
+      const entryDir = continueEntry.lang==="en" ? "ltr" : "rtl";
+      c.innerHTML=`${ICON_PLAY}<span>${esc(L.continue)}: <bdi dir="${entryDir}">${esc(continueEntry.label)}</bdi></span><small>${dur(continueEntry.duration)}</small>`;
       c.addEventListener("click",()=>{
         R.expand();
         if(cur() && cur().src===continueEntry.url){ audio.paused?audio.play():audio.pause(); return; }
@@ -981,10 +968,10 @@ function bookEl(b, openToc){
 
   // spine + toc, segment width ∝ chapter length
   const spine=$(".spine",el), toc=$(".toc",el);
-  const tracks=chapters.map((c,i)=>mkTrack(b,"chapter",c,i));
+  const tracks=chapters.map((c,i)=>mkTrack(b,"chapter",c,i,bLang));
   R.tracks=tracks;
   chapters.forEach((c,i)=>{
-    const title=chTitle(b.slug,c);
+    const title=chTitle(b.slug,c,bLang);
     const played = HISTORY[c.url] && HISTORY[c.url].played;
     const seg=document.createElement("button");
     seg.type="button"; seg.className="seg";
@@ -1036,10 +1023,10 @@ function bookEl(b, openToc){
    uses in books.meta.json, so it means the same chapter in both languages. */
 const chapterKey = url => url.split("/").pop().replace(/\.m4a$/,"").replace(/_(en|fa)$/,"");
 
-function mkTrack(b,kind,ep,idx){
-  return { slug:b.slug, kind, idx, key:chapterKey(ep.url),
+function mkTrack(b,kind,ep,idx,lang){
+  return { slug:b.slug, kind, idx, lang, key:chapterKey(ep.url),
     book:(META[b.slug]&&META[b.slug].title_en)||b.title||b.slug,
-    label: kind==="full" ? t().whole : `${t().chShort} ${num(idx+1)} — ${chTitle(b.slug,ep)}`,
+    label: kind==="full" ? t().whole : `${t().chShort} ${num(idx+1)} — ${chTitle(b.slug,ep,lang)}`,
     src:ep.url };
 }
 
@@ -1099,6 +1086,8 @@ function load(autoplay){
   if(autoplay && mIsMobile()) mExpand();            // open expanded when they play something
   $("#prev").disabled = qi<=0;
   $("#next").disabled = qi>=queue.length-1;
+  $("#plang").textContent = tr.lang==="en" ? "EN" : "فا";
+  $("#plang").setAttribute("aria-pressed", tr.lang==="en" ? "true" : "false");
   const histEntry=HISTORY[tr.src];
   if(shouldResume(histEntry)){
     audio.addEventListener("loadedmetadata",()=>{ audio.currentTime=histEntry.position; },{once:true});
@@ -1172,6 +1161,12 @@ audio.addEventListener("timeupdate",()=>{
 $("#toggle").addEventListener("click",()=>audio.paused?audio.play().catch(fail):audio.pause());
 $("#prev").addEventListener("click",()=>{ if(qi>0){ qi--; load(true); } });
 $("#next").addEventListener("click",()=>{ if(qi<queue.length-1){ qi++; load(true); } });
+/* Switch the currently-playing book's language without leaving the player —
+   same per-book toggle as the one on the book's own card. */
+$("#plang").addEventListener("click",()=>{
+  const tr=cur(); if(!tr) return;
+  switchBookLang(tr.slug, tr.lang==="en" ? "fa" : "en");
+});
 
 /* 15s skip */
 $("#pShare").addEventListener("click",mShare);
@@ -1243,48 +1238,50 @@ document.addEventListener("keydown", e=>{
   e.preventDefault(); qBox.focus(); qBox.select();
 });
 
-/* language switch keeps your place */
-$$("[data-setlang]").forEach(b=>b.addEventListener("click",()=>{
-  if(b.dataset.setlang===LANG) return;
-  const tr=cur(), ratio = audio.duration ? audio.currentTime/audio.duration : 0;
-  const keep = tr ? {slug:tr.slug, kind:tr.kind, idx:tr.idx, playing:!audio.paused} : null;
-  LANG=b.dataset.setlang; localStorage.setItem("abs-lang",LANG);
-  audio.pause(); queue=[]; qi=-1;
-  render();
-  if(keep) resume(keep, ratio);
-  else { $("#player").classList.remove("on"); document.body.classList.remove("has-player"); }
-}));
-
-function resume(keep, ratio){
+function resume(keep, ratio, lang){
   const b=(DATA.books||[]).find(x=>x.slug===keep.slug); if(!b) return;
-  const {full,chapters}=split(b);
+  const {full,chapters}=split(b, lang);
   if(keep.kind==="full"){
-    if(!full) return; queue=[mkTrack(b,"full",full,0)]; qi=0;
+    if(!full) return; queue=[mkTrack(b,"full",full,0,lang)]; qi=0;
   } else {
     if(!chapters[keep.idx]) return;
-    queue=chapters.map((c,i)=>mkTrack(b,"chapter",c,i)); qi=keep.idx;
+    queue=chapters.map((c,i)=>mkTrack(b,"chapter",c,i,lang)); qi=keep.idx;
   }
   load(false);
   audio.addEventListener("loadedmetadata",()=>{ if(audio.duration) audio.currentTime=ratio*audio.duration; },{once:true});
   if(keep.playing) audio.play().catch(fail);
 }
 
+/* Switch one book's language — used by that book's card toggle and the
+   player-bar toggle. If the currently playing track belongs to this book,
+   the equivalent chapter in the new language starts at the same position
+   (same idea as the old site-wide toggle, just scoped to one book); every
+   other book and the page chrome are untouched. */
+function switchBookLang(slug, newLang){
+  const tr=cur(), playingThisBook = tr && tr.slug===slug;
+  const ratio = playingThisBook && audio.duration ? audio.currentTime/audio.duration : 0;
+  const keep = playingThisBook ? {slug, kind:tr.kind, idx:tr.idx, playing:!audio.paused} : null;
+  setBookLang(slug, newLang);
+  render();
+  if(keep) resume(keep, ratio, newLang);
+}
+
 /* Resume a specific history entry — used by the continue-listening row and a
    book's own "Continue: <episode>" button. If the entry's language differs from
-   what's currently shown, switch first (same idea as the language toggle above);
-   the saved position itself is restored automatically by load()'s own check. */
+   what this book is currently showing, switch first; the saved position itself
+   is restored automatically by load()'s own check. */
 function playHistoryEntry(entry){
   const b=(DATA.books||[]).find(x=>x.slug===entry.slug); if(!b) return;
-  if(entry.lang!==LANG){ LANG=entry.lang; localStorage.setItem("abs-lang",LANG); render(); }
-  const {full,chapters}=split(b);
+  if(getBookLang(entry.slug)!==entry.lang){ setBookLang(entry.slug, entry.lang); render(); }
+  const {full,chapters}=split(b, entry.lang);
   if(entry.kind==="full"){
     if(!full) return;
-    start([mkTrack(b,"full",full,0)],0);
+    start([mkTrack(b,"full",full,0,entry.lang)],0);
   }else{
     let i = chapters.findIndex(c=>c.url===entry.url);
     if(i<0) i = entry.idx;
     if(!chapters[i]) return;
-    start(chapters.map((c,j)=>mkTrack(b,"chapter",c,j)), i);
+    start(chapters.map((c,j)=>mkTrack(b,"chapter",c,j,entry.lang)), i);
   }
 }
 
@@ -1390,7 +1387,7 @@ sForm.addEventListener("submit",async e=>{
     const r=await fetch(SB_URL+"/suggestions",{ method:"POST",
       headers:{...SB_H,"Prefer":"return=minimal"},
       body:JSON.stringify({ title, author:(fd.get("author")||"").trim()||null,
-        lang:LANG, why:(fd.get("why")||"").trim()||null }) });
+        lang:"fa", why:(fd.get("why")||"").trim()||null }) });
     if(!r.ok) throw 0;
     sMsg.textContent=t().sent; sForm.reset();
     setTimeout(()=>dlg.close(),1300);
@@ -1404,7 +1401,7 @@ const mIsMobile=()=>matchMedia("(max-width:680px)").matches;
 let mExpandedAt=0;
 function mExpand(){ mp.dataset.state="expanded"; mExpandedAt=Date.now(); }
 function mCollapse(){ mp.dataset.state="collapsed"; }
-function faDigits(s){ return LANG==="fa" ? s.replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[+d]) : s; }
+function faDigits(s){ return s.replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[+d]); }
 function stopPlayer(){
   audio.pause(); audio.removeAttribute("src"); queue=[]; qi=-1;
   $("#player").classList.remove("on"); document.body.classList.remove("has-player");
@@ -1415,7 +1412,7 @@ function mpSetTrack(tr){
   $$(".mp-title").forEach(e=>e.textContent=tr.label);   // collapsed mini bar (chapter label)
   $("#mpBook").textContent=tr.book;                     // expanded: book name (prominent)
   $("#mpChap").textContent=tr.label;                    // expanded: chapter/episode name
-  const meta=META[tr.slug]||{}, cov=meta.cover||"", ph=LANG==="fa"?"کاور":"cover";
+  const meta=META[tr.slug]||{}, cov=meta.cover||"", ph="کاور";
   $("#mpCover").innerHTML = cov
     ? `<img src="${esc(cov)}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.replaceWith(document.createTextNode('${ph}'))">`
     : ph;

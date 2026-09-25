@@ -15,13 +15,17 @@ const grab = (start, end) => {
 const src = grab("const norm =", '.replace(/\\s+/g, " ").trim();')
           + "\n" + grab("function matchBook(b){", "\n}");
 
-// Minimal stand-ins for the page globals matchBook closes over.
-const ctx = { META: {}, Q: "", LANG: "en" };
+// Minimal stand-ins for the page globals matchBook closes over. split()/chTitle()
+// take an explicit lang now (matchBook checks both "fa" and "en" unconditionally,
+// since there's no site-wide language for search to follow) — a book fixture can
+// provide per-language chapters via `episodes: {fa:[...], en:[...]}`, falling back
+// to a flat `chapters` array (same set either language) for the simple cases below.
+const ctx = { META: {}, Q: "" };
 const harness = `
   ${src}
   const bookCats = slug => (META[slug] && META[slug].categories) || [];
-  const split = b => ({ chapters: b.chapters || [] });
-  const chTitle = (slug, c) => c.title;
+  const split = (b, lang) => ({ chapters: (b.episodes && b.episodes[lang]) || b.chapters || [] });
+  const chTitle = (slug, c, lang) => c.title;
   module.exports = { norm, matchBook, setQ: v => { Q = norm(v); } };
 `;
 const mod = { exports: {} };
@@ -64,5 +68,19 @@ assert.strictEqual(hit("zzz"), null);
 ctx.META.syw.title_fa = "خلاصه‌های کتاب";
 assert.ok(hit("خلاصه های"), "typing a space finds a ZWNJ title");
 assert.ok(hit("كتاب"), "Arabic keyboard finds Persian text");
+
+/* ---- matchBook() checks both languages, regardless of which one a book
+   currently shows — there's no site-wide language for search to follow. ---- */
+const BILINGUAL = {
+  slug: "bl", title: "Bilingual Book",
+  episodes: {
+    fa: [{ title: "فصل مقدماتی" }],
+    en: [{ title: "Getting Started" }],
+  },
+};
+ctx.META.bl = { title_en: "Bilingual Book", title_fa: "کتاب دوزبانه" };
+const hitBl = q => { setQ(q); return matchBook(BILINGUAL); };
+assert.ok(hitBl("Getting Started")?.viaChapter, "English chapter title found regardless of display language");
+assert.ok(hitBl("مقدماتی")?.viaChapter, "Persian chapter title found regardless of display language");
 
 console.log("ok");
