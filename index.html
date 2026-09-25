@@ -364,6 +364,23 @@ footer a:hover{ color:var(--paper); }
 }
 @media (prefers-reduced-motion:reduce){ *{ transition-duration:.01ms !important; } html{ scroll-behavior:auto; } }
 </style>
+<script>
+/* Visitor stats via GoatCounter: cookie-free, no personal data, no consent banner.
+   Set GC_SITE to your GoatCounter site code (https://<code>.goatcounter.com) to turn
+   it on; while it is empty nothing is loaded and nothing is sent. */
+const GC_SITE = "aminmir";
+if(GC_SITE && location.hostname !== "localhost" && location.hostname !== "127.0.0.1"){
+  const gc = document.createElement("script");
+  gc.async = true;
+  gc.src = "https://gc.zgo.at/count.js";
+  gc.dataset.goatcounter = `https://${GC_SITE}.goatcounter.com/count`;
+  document.head.appendChild(gc);
+}
+/* A named event. Safe to call whether or not the counter is on or has loaded yet. */
+function stat(name, title){
+  try{ window.goatcounter && window.goatcounter.count && window.goatcounter.count({path:name, title:title||name, event:true}); }catch{}
+}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -611,6 +628,7 @@ let bookLang = {};
 try{ bookLang = JSON.parse(localStorage.getItem("abs-book-lang") || "{}"); }catch{ bookLang = {}; }
 const getBookLang = slug => bookLang[slug] || "fa";
 function setBookLang(slug, lang){
+  stat("lang-"+lang, "Listening language: "+lang);
   bookLang[slug] = lang;
   localStorage.setItem("abs-book-lang", JSON.stringify(bookLang));
 }
@@ -618,6 +636,12 @@ function setBookLang(slug, lang){
 let DATA = null;
 let META = {};   // slug -> hand-edited { title_en, title_fa, author, cover, note_en, note_fa }
 const audio = new Audio();
+const playedThisVisit = new Set();
+audio.addEventListener("play", ()=>{
+  const tr = cur(); if(!tr || playedThisVisit.has(tr.src)) return;
+  playedThisVisit.add(tr.src);                    // pause/resume must not count twice
+  stat(`play/${tr.slug}/${tr.lang}`, `Play: ${tr.book} (${tr.lang})`);
+});
 let queue = [], qi = -1;
 const refs = {};   // slug -> { segs:[], fills:[], whole, chs:[] }
 
