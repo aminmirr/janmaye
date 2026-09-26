@@ -157,8 +157,12 @@ html[data-lang="fa"] .cat{ font-family:'Vazirmatn',sans-serif; }
 .continue-bar-fill{ height:100%; background:var(--accent); }
 
 /* whole-book: play + download side by side */
+/* min-width:0 lets this grid item shrink below its content. Without it a long
+   "Continue: <chapter title>" button (nowrap) stretched every book past the phone's
+   width, and in RTL the overflow lands on the left — content stuck to the right with
+   a strip you could pan into. */
 .book-side{ display:flex; flex-wrap:wrap; gap:10px; align-items:center;
-  max-width:260px; justify-content:flex-end; }
+  max-width:260px; min-width:0; justify-content:flex-end; }
 .whole-dl{ display:inline-flex; align-items:center; justify-content:center;
   width:40px; height:40px; flex:none; color:var(--haze); text-decoration:none;
   border:1px solid var(--line); border-radius:999px; transition:color .2s,border-color .2s; }
@@ -219,7 +223,7 @@ html[data-lang="fa"] .sheet-actions button,html[data-lang="fa"] .sheet-actions a
 #suggest{ cursor:pointer; }
 
 .whole{ display:inline-flex; align-items:center; justify-content:center; gap:10px;
-  font:inherit; font-size:.9rem; cursor:pointer; white-space:nowrap; min-width:0;
+  font:inherit; font-size:.9rem; cursor:pointer; white-space:nowrap; min-width:0; max-width:100%;
   background:var(--accent); color:var(--ink); border:1px solid var(--accent);
   border-radius:999px; padding:11px 20px; transition:filter .2s; }
 .whole:hover{ filter:brightness(1.08); }
