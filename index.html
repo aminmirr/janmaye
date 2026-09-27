@@ -777,6 +777,7 @@ function recordEntry(tr, position, duration, forcePlayed){
     slug: tr.slug, lang: tr.lang, kind: tr.kind, idx: tr.idx, book: tr.book, label: tr.label,
   };
   saveHistory(HISTORY);
+  paintContinue(false);       // only redraws if the set or order of "recent" changed
 }
 
 let lastHistoryWriteAt = 0;
@@ -792,6 +793,7 @@ function forceRecordProgress(played){
   const tr=cur(); if(!tr || !audio.duration) return;
   lastHistoryWriteAt = Date.now();
   recordEntry(tr, audio.currentTime, audio.duration, played);
+  paintContinue(true);
 }
 
 /* ---------------- render ---------------- */
@@ -838,6 +840,7 @@ function render(){
   paintSpines();
   paintVotes();
   renderContinueRow();
+  continueSig = continueSignature();
 }
 
 function renderCats(books){
@@ -978,18 +981,8 @@ function bookEl(b, openToc){
        (load() resumes it automatically since it's the same URL) — a second
        button here would just duplicate it. Only chapters get their own
        continue button, since the "Full summary" button can't reach them. */
-    if(continueEntry && continueEntry.kind!=="full"){
-      const c=document.createElement("button");
-      c.type="button"; c.className="whole"; c.dataset.on="0";
-      const entryDir = continueEntry.lang==="en" ? "ltr" : "rtl";
-      c.innerHTML=`${ICON_PLAY}<span>${esc(L.continue)}: <bdi dir="${entryDir}">${esc(continueEntry.label)}</bdi></span><small>${dur(continueEntry.duration)}</small>`;
-      c.addEventListener("click",()=>{
-        R.expand();
-        if(cur() && cur().src===continueEntry.url){ audio.paused?audio.play():audio.pause(); return; }
-        playHistoryEntry(continueEntry);
-      });
-      side.append(c); R.continueBtn=c;
-    }
+    R.side=side; R.hasFull=true;
+    buildContinueBtn(R);
   } else {
     side.innerHTML=`<span class="mono missing">${esc(L.missing)}</span>`;
   }
@@ -1153,7 +1146,19 @@ function paintSpines(){
 audio.addEventListener("play",paintSpines);
 audio.addEventListener("pause",paintSpines);
 audio.addEventListener("pause",()=>forceRecordProgress(false));
+/* beforeunload is not fired on mobile when a tab is swiped away or the screen is
+   locked, so it alone lost the last stretch of listening. visibilitychange and
+   pagehide are the hooks that do fire there. Coming back, re-read what is stored:
+   the page may have been frozen or restored from the back/forward cache, or another
+   tab may have written. */
 addEventListener("beforeunload",()=>forceRecordProgress(false));
+addEventListener("pagehide",()=>forceRecordProgress(false));
+document.addEventListener("visibilitychange",()=>{
+  if(document.visibilityState==="hidden") forceRecordProgress(false);
+  else syncHistoryFromStorage();
+});
+addEventListener("pageshow",e=>{ if(e.persisted) syncHistoryFromStorage(); });
+addEventListener("storage",e=>{ if(e.key===HISTORY_KEY) syncHistoryFromStorage(); });
 audio.addEventListener("error",()=>{ if(audio.src) fail(); });
 audio.addEventListener("ended",()=>{
   const tr=cur();
@@ -1311,6 +1316,51 @@ function playHistoryEntry(entry){
     if(!chapters[i]) return;
     start(chapters.map((c,j)=>mkTrack(b,"chapter",c,j,entry.lang)), i);
   }
+}
+
+/* The per-book "Continue: <chapter>" button. Built from R.continueEntry so it can be
+   rebuilt in place when history changes, without redrawing the whole list. */
+function buildContinueBtn(R){
+  if(R.continueBtn){ R.continueBtn.remove(); R.continueBtn=null; }
+  const e=R.continueEntry;
+  if(!R.side || !R.hasFull || !e || e.kind==="full") return;
+  const L=t();
+  const c=document.createElement("button");
+  c.type="button"; c.className="whole"; c.dataset.on="0";
+  const entryDir = e.lang==="en" ? "ltr" : "rtl";
+  c.innerHTML=`${ICON_PLAY}<span>${esc(L.continue)}: <bdi dir="${entryDir}">${esc(e.label)}</bdi></span><small>${dur(e.duration)}</small>`;
+  c.addEventListener("click",()=>{
+    R.expand();
+    if(cur() && cur().src===e.url){ audio.paused?audio.play():audio.pause(); return; }
+    playHistoryEntry(e);
+  });
+  R.side.append(c); R.continueBtn=c;
+}
+
+/* Bring every "continue" surface up to date with HISTORY: the row at the top and each
+   book's own button. These were drawn once at load and never again, so after you
+   listened they stayed as they were until a full reload. */
+let continueSig="";
+const continueSignature = ()=> continueListening(HISTORY).map(e=>e.url).join("|")
+  + "#" + Object.keys(refs).map(s=>{ const e=mostRecentInProgress(HISTORY,s); return e?e.url:""; }).join("|");
+function paintContinue(force){
+  const sig = continueSignature();
+  if(!force && sig===continueSig) return;
+  continueSig=sig;
+  for(const slug in refs){
+    const R=refs[slug];
+    R.continueEntry = mostRecentInProgress(HISTORY, slug);
+    buildContinueBtn(R);
+  }
+  renderContinueRow();
+  paintSpines();
+}
+/* Re-read what is on disk, for when this page was frozen or another tab wrote. */
+function syncHistoryFromStorage(){
+  const fresh=loadHistory();
+  for(const k in HISTORY) delete HISTORY[k];
+  Object.assign(HISTORY, fresh);
+  paintContinue(true);
 }
 
 function renderContinueRow(){
