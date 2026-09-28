@@ -779,6 +779,178 @@
       }
     },
     {
+      "slug": "designing-data-intensive-applications-the-big-ideas-behind-r",
+      "title": "Designing Data Intensive Applications The Big Ideas Behind R",
+      "episodes": {
+        "English": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/whole_book_en.m4a",
+            "seconds": 1495
+          },
+          {
+            "title": "Trade Offs in Data Systems Architecture",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/00-Trade-Offs-in-Data-Systems-Architecture_en.m4a",
+            "seconds": 1529
+          },
+          {
+            "title": "Defining Nonfunctional Requirements",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/01-Defining-Nonfunctional-Requirements_en.m4a",
+            "seconds": 1504
+          },
+          {
+            "title": "Data Models and Query Languages",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/02-Data-Models-and-Query-Languages_en.m4a",
+            "seconds": 1325
+          },
+          {
+            "title": "Storage and Retrieval",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/03-Storage-and-Retrieval_en.m4a",
+            "seconds": 1458
+          },
+          {
+            "title": "Encoding and Evolution",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/04-Encoding-and-Evolution_en.m4a",
+            "seconds": 1416
+          },
+          {
+            "title": "Replication",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/05-Replication_en.m4a",
+            "seconds": 1576
+          },
+          {
+            "title": "Sharding",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/06-Sharding_en.m4a",
+            "seconds": 1561
+          },
+          {
+            "title": "Transactions",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/07-Transactions_en.m4a",
+            "seconds": 1418
+          },
+          {
+            "title": "The Trouble with Distributed Systems",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/08-The-Trouble-with-Distributed-Systems_en.m4a",
+            "seconds": 1570
+          },
+          {
+            "title": "Consistency and Consensus",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/09-Consistency-and-Consensus_en.m4a",
+            "seconds": 1544
+          },
+          {
+            "title": "Batch Processing",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/10-Batch-Processing_en.m4a",
+            "seconds": 1435
+          },
+          {
+            "title": "Stream Processing",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/11-Stream-Processing_en.m4a",
+            "seconds": 1373
+          },
+          {
+            "title": "A Philosophy of Streaming Systems",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/12-A-Philosophy-of-Streaming-Systems_en.m4a",
+            "seconds": 1711
+          },
+          {
+            "title": "Doing the Right Thing",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/13-Doing-the-Right-Thing_en.m4a",
+            "seconds": 1337
+          }
+        ],
+        "Persian": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/whole_book_fa.m4a",
+            "seconds": 984
+          },
+          {
+            "title": "Trade Offs in Data Systems Architecture",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/00-Trade-Offs-in-Data-Systems-Architecture_fa.m4a",
+            "seconds": 1521
+          },
+          {
+            "title": "Defining Nonfunctional Requirements",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/01-Defining-Nonfunctional-Requirements_fa.m4a",
+            "seconds": 1620
+          },
+          {
+            "title": "Data Models and Query Languages",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/02-Data-Models-and-Query-Languages_fa.m4a",
+            "seconds": 938
+          },
+          {
+            "title": "Storage and Retrieval",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/03-Storage-and-Retrieval_fa.m4a",
+            "seconds": 1128
+          },
+          {
+            "title": "Encoding and Evolution",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/04-Encoding-and-Evolution_fa.m4a",
+            "seconds": 1226
+          },
+          {
+            "title": "Replication",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/05-Replication_fa.m4a",
+            "seconds": 1029
+          },
+          {
+            "title": "Sharding",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/06-Sharding_fa.m4a",
+            "seconds": 1726
+          },
+          {
+            "title": "Transactions",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/07-Transactions_fa.m4a",
+            "seconds": 1946
+          },
+          {
+            "title": "The Trouble with Distributed Systems",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/08-The-Trouble-with-Distributed-Systems_fa.m4a",
+            "seconds": 1184
+          },
+          {
+            "title": "Consistency and Consensus",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/09-Consistency-and-Consensus_fa.m4a",
+            "seconds": 1000
+          },
+          {
+            "title": "Batch Processing",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/10-Batch-Processing_fa.m4a",
+            "seconds": 1215
+          },
+          {
+            "title": "Stream Processing",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/11-Stream-Processing_fa.m4a",
+            "seconds": 1316
+          },
+          {
+            "title": "A Philosophy of Streaming Systems",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/12-A-Philosophy-of-Streaming-Systems_fa.m4a",
+            "seconds": 1496
+          },
+          {
+            "title": "Doing the Right Thing",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/13-Doing-the-Right-Thing_fa.m4a",
+            "seconds": 883
+          }
+        ]
+      },
+      "zips": {
+        "English": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/designing-data-intensive-applications-the-big-ideas-behind-r-en.zip",
+          "bytes": 186572370,
+          "count": 15
+        },
+        "Persian": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-designing-data-intensive-applications-the-big-ideas-behind-r/designing-data-intensive-applications-the-big-ideas-behind-r-fa.zip",
+          "bytes": 160673475,
+          "count": 15
+        }
+      }
+    },
+    {
       "slug": "exploratory-data-analysis-john-w-tukey",
       "title": "Exploratory Data Analysis  John W Tukey",
       "episodes": {

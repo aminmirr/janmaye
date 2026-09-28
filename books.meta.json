@@ -998,5 +998,76 @@
         "title_fa": ""
       }
     }
+  },
+  "designing-data-intensive-applications-the-big-ideas-behind-r": {
+    "title_en": "Designing Data Intensive Applications",
+    "title_fa": "طراحی اپلیکیشن های داده محور",
+    "author": "Martin Kleppmann & Chris Riccomini",
+    "cover": "'covers/designing data-intensive applications.jpg'",
+    "note_en": "",
+    "note_fa": "",
+    "translated_fa": null,
+    "categories": [
+      "Data Science",
+      "computer science"
+    ],
+    "chapters": {
+      "00-Trade-Offs-in-Data-Systems-Architecture": {
+        "title_en": "Trade Offs in Data Systems Architecture",
+        "title_fa": ""
+      },
+      "01-Defining-Nonfunctional-Requirements": {
+        "title_en": "Defining Nonfunctional Requirements",
+        "title_fa": ""
+      },
+      "02-Data-Models-and-Query-Languages": {
+        "title_en": "Data Models and Query Languages",
+        "title_fa": ""
+      },
+      "03-Storage-and-Retrieval": {
+        "title_en": "Storage and Retrieval",
+        "title_fa": ""
+      },
+      "04-Encoding-and-Evolution": {
+        "title_en": "Encoding and Evolution",
+        "title_fa": ""
+      },
+      "05-Replication": {
+        "title_en": "Replication",
+        "title_fa": ""
+      },
+      "06-Sharding": {
+        "title_en": "Sharding",
+        "title_fa": ""
+      },
+      "07-Transactions": {
+        "title_en": "Transactions",
+        "title_fa": ""
+      },
+      "08-The-Trouble-with-Distributed-Systems": {
+        "title_en": "The Trouble with Distributed Systems",
+        "title_fa": ""
+      },
+      "09-Consistency-and-Consensus": {
+        "title_en": "Consistency and Consensus",
+        "title_fa": ""
+      },
+      "10-Batch-Processing": {
+        "title_en": "Batch Processing",
+        "title_fa": ""
+      },
+      "11-Stream-Processing": {
+        "title_en": "Stream Processing",
+        "title_fa": ""
+      },
+      "12-A-Philosophy-of-Streaming-Systems": {
+        "title_en": "A Philosophy of Streaming Systems",
+        "title_fa": ""
+      },
+      "13-Doing-the-Right-Thing": {
+        "title_en": "Doing the Right Thing",
+        "title_fa": ""
+      }
+    }
   }
 }
