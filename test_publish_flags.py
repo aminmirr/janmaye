@@ -40,6 +40,15 @@ assert e["author"] == "Austin Kleon", e
 assert e["cover"] == "covers/x.jpg", e
 assert e["categories"] == ["Creativity", "Career"], e
 
+# 1b. A --cover flag with stray wrapping quotes (typed into the dashboard's
+# publish wizard, or passed by hand) is cleaned the same way pick_cover() is —
+# this is the path that actually produced the incident: the wizard's Input
+# widget sends whatever was typed straight through as a flag, unedited.
+tmp = with_meta(blank)
+m.apply_meta_flags(BOOK, "T", "", "A", "'covers/typo with quotes.jpg'", "")
+e = json.loads(tmp.read_text())[SLUG]
+assert e["cover"] == "covers/typo with quotes.jpg", e
+
 # 2. An empty categories string clears them, same as choosing none interactively.
 tmp = with_meta({**blank, "categories": ["Old"]})
 m.apply_meta_flags(BOOK, "T", "", "A", "", "")

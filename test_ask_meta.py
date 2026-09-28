@@ -70,4 +70,23 @@ sys.stdin.isatty = lambda: False
 m.ask_meta([BOOK])
 assert json.loads(tmp.read_text())[SLUG] == blank
 
+# 6. clean_cover_path() strips accidental wrapping quotes and whitespace —
+# a books.meta.json entry hand-edited to "'covers/x.jpg'" instead of
+# "covers/x.jpg" is exactly the mistake this guards against.
+for raw, want in (
+    ("'covers/x.jpg'", "covers/x.jpg"),
+    ('"covers/x.jpg"', "covers/x.jpg"),
+    ("  covers/x.jpg  ", "covers/x.jpg"),
+    ("'  covers/x.jpg  '", "covers/x.jpg"),
+    ("'\"covers/x.jpg\"'", "covers/x.jpg"),      # both quote styles, nested
+    ("https://example.com/x.jpg", "https://example.com/x.jpg"),  # untouched
+    ("", ""),
+):
+    assert m.clean_cover_path(raw) == want, (raw, m.clean_cover_path(raw))
+
+# 7. The interactive prompt cleans the same way — a value typed or pasted with
+# stray quotes into pick_cover() never reaches the saved file quoted.
+e = run(blank, "\n\n\n'covers/typo-with-quotes.jpg'\n\n")
+assert e["cover"] == "covers/typo-with-quotes.jpg", e
+
 print("ok")

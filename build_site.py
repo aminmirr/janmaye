@@ -23,6 +23,7 @@ only holds index.html + manifest.json. Idempotent: re-running re-uploads with
 remote, so the asset URLs are always correct.
 """
 import json
+import os
 import re
 import subprocess
 import sys
@@ -37,6 +38,31 @@ MANIFEST = SITE_DIR / "manifest.json"
 # this script (and the site's own files) live — rebranding the site must
 # never re-upload or move any existing episode's audio.
 AUDIO_REPO = "aminmirr/book-podcasts"
+# Every repo this script touches is aminmirr's — but `gh`'s "active account" is a
+# single global switch on this machine, shared with whatever else is using `gh`
+# (a Claude session in another editor, a different terminal). A `gh release ...`
+# call here has no `--repo`-scoped identity of its own; it just runs as whichever
+# account `gh` currently has active, silently. When that's the wrong account,
+# GitHub answers "release not found" / a 404 on the upload URL for a release that
+# exists — indistinguishable from a real missing release in this script's own
+# output, and it looked exactly like a fresh corrupt-file incident before the
+# cause was traced to this (2026-09-28, two books stuck "ready to upload").
+# GH_TOKEN overrides gh's stored session for one subprocess call without touching
+# the shared global switch, the same fix already applied to this account's git
+# remotes (see book_podcast's CLAUDE.md / this incident's session notes).
+_GH_ACCOUNT = "aminmirr"
+
+
+def _gh_env() -> dict:
+    env = os.environ.copy()
+    try:
+        token = subprocess.run(["gh", "auth", "token", "-u", _GH_ACCOUNT],
+                               capture_output=True, text=True, check=True).stdout.strip()
+        if token:
+            env["GH_TOKEN"] = token
+    except (subprocess.CalledProcessError, FileNotFoundError, OSError):
+        pass   # fall back to whatever account gh already has active, rather than fail outright
+    return env
 # Shared with the book_podcast generator repo and check_translations.py's --register —
 # a book can be researched before it's even been fed to the generator.
 TRANSLATION_RESEARCH_FILE = BOOKS_ROOT / "_translation_research.json"
@@ -182,7 +208,7 @@ def release_assets(tag: str, repo: str) -> dict[str, int]:
     resolves toward doing the work.
     """
     r = subprocess.run(["gh", "release", "view", tag, "--repo", repo, "--json", "assets"],
-                       capture_output=True, text=True)
+                       capture_output=True, text=True, env=_gh_env())
     if r.returncode:
         return {}
     try:
@@ -218,10 +244,11 @@ def publish_book(book_name: str, repo: str, do_shrink: bool = True,
     title = book_name.replace("-", " ")
 
     # create the release once (ignore "already exists")
+    gh_env = _gh_env()
     subprocess.run(
         ["gh", "release", "create", tag, "--repo", repo, "--title", title,
          "--notes", f"Podcast audio for {title}"],
-        capture_output=True, text=True,
+        capture_output=True, text=True, env=gh_env,
     )
 
     all_paths = [p for ps in files.values() for p in ps]
@@ -230,7 +257,7 @@ def publish_book(book_name: str, repo: str, do_shrink: bool = True,
     def push(path: Path) -> None:
         r = subprocess.run(
             ["gh", "release", "upload", tag, "--repo", repo, "--clobber", str(path)],
-            capture_output=True, text=True,
+            capture_output=True, text=True, env=gh_env,
         )
         if r.returncode:
             print()
@@ -348,6 +375,18 @@ def list_covers() -> list[str]:
         if covers.is_dir() else []
 
 
+def clean_cover_path(raw: str) -> str:
+    """Strip stray quote marks a cover path picked up by accident — typed into a
+    prompt or the dashboard's publish wizard out of shell/JSON habit, or pasted
+    from somewhere that already had them, e.g. "'covers/x.jpg'" instead of
+    "covers/x.jpg". Every writer of books.meta.json's cover field funnels through
+    here (pick_cover() and apply_meta_flags() below), so a mistake made once
+    doesn't need re-fixing at every call site — or worse, in the file by hand.
+    index.html defends the same way at render time, for whatever is already
+    sitting in the file from before this existed."""
+    return str(raw or "").strip().strip("'\"").strip()
+
+
 def pick_cover(current: str) -> str:
     """Numbered list of covers/ so the path never has to be typed. Also takes a
     pasted https:// URL or any path containing a slash."""
@@ -355,7 +394,7 @@ def pick_cover(current: str) -> str:
     print("    (drop the image in covers/ first, then pick a number — or paste a URL)")
     for i, f in enumerate(files, 1):
         print(f"    [{i}] {f}")
-    raw = input(f"  Cover{f' [{current}]' if current else ''}: ").strip()
+    raw = clean_cover_path(input(f"  Cover{f' [{current}]' if current else ''}: "))
     if raw.isdigit() and 1 <= int(raw) <= len(files):
         return f"covers/{files[int(raw) - 1]}"
     return raw if "/" in raw else ""
@@ -507,7 +546,7 @@ def apply_meta_flags(name: str, title_en: str, title_fa: str, author: str,
     e["title_en"] = title_en
     e["title_fa"] = title_fa
     e["author"] = author
-    e["cover"] = cover
+    e["cover"] = clean_cover_path(cover)
     e["categories"] = parse_categories(categories_raw, list(category_counts(meta)))
     META.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n")
 
