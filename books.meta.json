@@ -1108,5 +1108,37 @@
         "title_fa": ""
       }
     }
+  },
+  "thinking-in-systems": {
+    "title_en": "Thinking in Systems",
+    "title_fa": "",
+    "author": "Donella Meadows",
+    "cover": "covers/thinking_in_systems.webp",
+    "note_en": "",
+    "note_fa": "",
+    "translated_fa": null,
+    "categories": [
+      "Business",
+      "Psychology",
+      "Career"
+    ],
+    "chapters": {
+      "00-Introduction-The-System-Lens": {
+        "title_en": "Introduction The System Lens",
+        "title_fa": ""
+      },
+      "01-PART-ONE-System-Structure-and-Behavior": {
+        "title_en": "PART ONE System Structure and Behavior",
+        "title_fa": ""
+      },
+      "02-PART-TWO-Systems-and-Us": {
+        "title_en": "PART TWO Systems and Us",
+        "title_fa": ""
+      },
+      "03-PART-THREE-Creating-Change8212in-Systems-and-in-Our-Philosop": {
+        "title_en": "PART THREE Creating Change8212in Systems and in Our Philosop",
+        "title_fa": ""
+      }
+    }
   }
 }

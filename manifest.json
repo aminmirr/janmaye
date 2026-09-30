@@ -1776,6 +1776,78 @@
       }
     },
     {
+      "slug": "thinking-in-systems",
+      "title": "Thinking in Systems",
+      "episodes": {
+        "English": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/whole_book_en.m4a",
+            "seconds": 1261
+          },
+          {
+            "title": "Introduction The System Lens",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/00-Introduction-The-System-Lens_en.m4a",
+            "seconds": 772
+          },
+          {
+            "title": "PART ONE System Structure and Behavior",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/01-PART-ONE-System-Structure-and-Behavior_en.m4a",
+            "seconds": 1363
+          },
+          {
+            "title": "PART TWO Systems and Us",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/02-PART-TWO-Systems-and-Us_en.m4a",
+            "seconds": 1544
+          },
+          {
+            "title": "PART THREE Creating Change8212in Systems and in Our Philosop",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/03-PART-THREE-Creating-Change8212in-Systems-and-in-Our-Philosop_en.m4a",
+            "seconds": 1415
+          }
+        ],
+        "Persian": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/whole_book_fa.m4a",
+            "seconds": 958
+          },
+          {
+            "title": "Introduction The System Lens",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/00-Introduction-The-System-Lens_fa.m4a",
+            "seconds": 1013
+          },
+          {
+            "title": "PART ONE System Structure and Behavior",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/01-PART-ONE-System-Structure-and-Behavior_fa.m4a",
+            "seconds": 1071
+          },
+          {
+            "title": "PART TWO Systems and Us",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/02-PART-TWO-Systems-and-Us_fa.m4a",
+            "seconds": 1590
+          },
+          {
+            "title": "PART THREE Creating Change8212in Systems and in Our Philosop",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/03-PART-THREE-Creating-Change8212in-Systems-and-in-Our-Philosop_fa.m4a",
+            "seconds": 1701
+          }
+        ]
+      },
+      "zips": {
+        "English": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/thinking-in-systems-en.zip",
+          "bytes": 53256132,
+          "count": 5
+        },
+        "Persian": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-thinking-in-systems/thinking-in-systems-fa.zip",
+          "bytes": 53087657,
+          "count": 5
+        }
+      }
+    },
+    {
       "slug": "dokumenpub-die-with-zero-9780358100515-2019033906-2019033907",
       "title": "dokumenpub die with zero 9780358100515 2019033906 2019033907",
       "episodes": {
