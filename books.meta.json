@@ -1074,7 +1074,7 @@
     "title_en": "Database Anonymization",
     "title_fa": "ناشناس سازی پایگاه داده",
     "author": "Josep Domingo-Ferrer, David Sánchez & Jordi Soria-Comas",
-    "cover": "Database Anonymization.jpeg",
+    "cover": "covers/Database Anonymization.jpeg",
     "note_en": "",
     "note_fa": "این کتاب که در مجموعه‌ی درسنامه‌های Synthesis در حوزه‌ی امنیت و حریم خصوصی اطلاعات منتشر شده، به پرسشی فنی و جدی می‌پردازد: وقتی داده‌های مربوط به افراد واقعی منتشر می‌شود، چگونه می‌توان هویت آن‌ها را پنهان نگه داشت بدون آنکه داده‌ها بی‌ارزش شوند؟ دومینگو-فرر و همکارانش مدل‌های حریم خصوصی مانند k-ناشناسی و نسل‌های بعدی آن را مرور می‌کنند و روش میکروتجمیع را برای ایجاد توازن میان کاهش ریسک افشا و حفظ کاربردپذیری داده معرفی می‌کنند. این کتابی تخصصی برای پژوهشگران و متخصصان علم داده و امنیت اطلاعات است، نه خواننده‌ی عمومی، و به کسی که با آمار و پایگاه‌داده آشناست بیشترین کمک را می‌کند.",
     "translated_fa": false,
@@ -1116,7 +1116,7 @@
     "cover": "covers/thinking_in_systems.webp",
     "note_en": "",
     "note_fa": "",
-    "translated_fa": null,
+    "translated_fa": 'اندیشیدن در سیستم‌ها',
     "categories": [
       "Business",
       "Psychology",
