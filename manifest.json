@@ -779,6 +779,98 @@
       }
     },
     {
+      "slug": "database-anonymization-privacy-models-data-utility-and-josep",
+      "title": "Database Anonymization Privacy Models Data Utility and Josep",
+      "episodes": {
+        "English": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/whole_book_en.m4a",
+            "seconds": 1524
+          },
+          {
+            "title": "Introduction",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/00-Introduction_en.m4a",
+            "seconds": 1360
+          },
+          {
+            "title": "Anonymization Methods for Microdata",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/01-Anonymization-Methods-for-Microdata_en.m4a",
+            "seconds": 1364
+          },
+          {
+            "title": "The k Anonymity Privacy Model",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/02-The-k-Anonymity-Privacy-Model_en.m4a",
+            "seconds": 1343
+          },
+          {
+            "title": "Beyond k Anonymity l Diversity and t Closeness",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/03-Beyond-k-Anonymity-l-Diversity-and-t-Closeness_en.m4a",
+            "seconds": 1598
+          },
+          {
+            "title": "Differential Privacy",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/04-Differential-Privacy_en.m4a",
+            "seconds": 1371
+          },
+          {
+            "title": "Differential Privacy by Individual Ranking Microaggregation",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/05-Differential-Privacy-by-Individual-Ranking-Microaggregation_en.m4a",
+            "seconds": 1355
+          }
+        ],
+        "Persian": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/whole_book_fa.m4a",
+            "seconds": 1582
+          },
+          {
+            "title": "Introduction",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/00-Introduction_fa.m4a",
+            "seconds": 1205
+          },
+          {
+            "title": "Anonymization Methods for Microdata",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/01-Anonymization-Methods-for-Microdata_fa.m4a",
+            "seconds": 1632
+          },
+          {
+            "title": "The k Anonymity Privacy Model",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/02-The-k-Anonymity-Privacy-Model_fa.m4a",
+            "seconds": 1210
+          },
+          {
+            "title": "Beyond k Anonymity l Diversity and t Closeness",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/03-Beyond-k-Anonymity-l-Diversity-and-t-Closeness_fa.m4a",
+            "seconds": 1616
+          },
+          {
+            "title": "Differential Privacy",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/04-Differential-Privacy_fa.m4a",
+            "seconds": 1062
+          },
+          {
+            "title": "Differential Privacy by Individual Ranking Microaggregation",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/05-Differential-Privacy-by-Individual-Ranking-Microaggregation_fa.m4a",
+            "seconds": 639
+          }
+        ]
+      },
+      "zips": {
+        "English": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/database-anonymization-privacy-models-data-utility-and-josep-en.zip",
+          "bytes": 83148746,
+          "count": 7
+        },
+        "Persian": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-database-anonymization-privacy-models-data-utility-and-josep/database-anonymization-privacy-models-data-utility-and-josep-fa.zip",
+          "bytes": 74972219,
+          "count": 7
+        }
+      }
+    },
+    {
       "slug": "designing-data-intensive-applications-the-big-ideas-behind-r",
       "title": "Designing Data Intensive Applications The Big Ideas Behind R",
       "episodes": {

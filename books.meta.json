@@ -799,8 +799,8 @@
     "author": "Mattias Desmet",
     "cover": "covers/the psychology of totallitarism.jpg",
     "note_en": "",
-    "note_fa": "",
-    "translated_fa": null,
+    "note_fa": "ماتیاس دسمت، استاد روان‌شناسی بالینی در بلژیک، در این کتاب مفهوم «شکل‌گیری توده» را طرح می‌کند: نوعی خودآگاهی جمعیِ بیمارگونه که از انزوای اجتماعی، بی‌معنایی و اضطراب پراکنده در جامعه سر برمی‌آورد و مردم را آماده‌ی پذیرفتن یک روایت واحد و یک رهبر می‌کند، حتی وقتی آن روایت با واقعیت نمی‌خواند. دسمت با تکیه بر هانا آرنت و گوستاو لوبون، اما با نگاهی روان‌شناختی نه صرفاً سیاسی، نشان می‌دهد چرا جوامع مدرن مستعد این پویایی‌اند. کتابی برای خواننده‌ای که می‌خواهد ریشه‌های روانی گرایش به تمامیت‌خواهی را، فراتر از تحلیل صرفاً تاریخی یا سیاسی، بفهمد.",
+    "translated_fa": false,
     "categories": [
       "Politics",
       "Philosophy",
@@ -1005,8 +1005,8 @@
     "author": "Martin Kleppmann & Chris Riccomini",
     "cover": "covers/designing data-intensive applications.jpg",
     "note_en": "",
-    "note_fa": "",
-    "translated_fa": null,
+    "note_fa": "مارتین کلپمن در این کتاب که به مرجع اصلی طراحی سیستم‌های داده‌محور در صنعت نرم‌افزار تبدیل شده، نشان می‌دهد چگونه پایگاه‌داده‌ها، صف‌های پیام، کش‌ها و سیستم‌های پردازش دسته‌ای و جریانی زیر پوسته کار می‌کنند و چرا انتخاب درست میان آن‌ها تفاوت میان سیستمی قابل‌اعتماد و سیستمی شکننده است. کتاب موضوعاتی مثل تکرار داده، افراز داده، تراکنش‌ها و سازگاری در سیستم‌های توزیع‌شده را با مثال‌های واقعی از گوگل و آمازون تا کافکا توضیح می‌دهد. مخاطب اصلی مهندسان نرم‌افزار و معماران سیستم هستند، نه خواننده‌ی عمومی؛ کتابی فنی و عمیق برای کسی که می‌خواهد فراتر از ابزارهای روز، اصول پایه‌ی طراحی سیستم را بفهمد.",
+    "translated_fa": false,
     "categories": [
       "Data Science",
       "computer science"
@@ -1066,6 +1066,45 @@
       },
       "13-Doing-the-Right-Thing": {
         "title_en": "Doing the Right Thing",
+        "title_fa": ""
+      }
+    }
+  },
+  "database-anonymization-privacy-models-data-utility-and-josep": {
+    "title_en": "Database Anonymization",
+    "title_fa": "ناشناس سازی پایگاه داده",
+    "author": "Josep Domingo-Ferrer, David Sánchez & Jordi Soria-Comas",
+    "cover": "Database Anonymization.jpeg",
+    "note_en": "",
+    "note_fa": "این کتاب که در مجموعه‌ی درسنامه‌های Synthesis در حوزه‌ی امنیت و حریم خصوصی اطلاعات منتشر شده، به پرسشی فنی و جدی می‌پردازد: وقتی داده‌های مربوط به افراد واقعی منتشر می‌شود، چگونه می‌توان هویت آن‌ها را پنهان نگه داشت بدون آنکه داده‌ها بی‌ارزش شوند؟ دومینگو-فرر و همکارانش مدل‌های حریم خصوصی مانند k-ناشناسی و نسل‌های بعدی آن را مرور می‌کنند و روش میکروتجمیع را برای ایجاد توازن میان کاهش ریسک افشا و حفظ کاربردپذیری داده معرفی می‌کنند. این کتابی تخصصی برای پژوهشگران و متخصصان علم داده و امنیت اطلاعات است، نه خواننده‌ی عمومی، و به کسی که با آمار و پایگاه‌داده آشناست بیشترین کمک را می‌کند.",
+    "translated_fa": false,
+    "categories": [
+      "computer science",
+      "Data Science"
+    ],
+    "chapters": {
+      "00-Introduction": {
+        "title_en": "Introduction",
+        "title_fa": ""
+      },
+      "01-Anonymization-Methods-for-Microdata": {
+        "title_en": "Anonymization Methods for Microdata",
+        "title_fa": ""
+      },
+      "02-The-k-Anonymity-Privacy-Model": {
+        "title_en": "The k Anonymity Privacy Model",
+        "title_fa": ""
+      },
+      "03-Beyond-k-Anonymity-l-Diversity-and-t-Closeness": {
+        "title_en": "Beyond k Anonymity l Diversity and t Closeness",
+        "title_fa": ""
+      },
+      "04-Differential-Privacy": {
+        "title_en": "Differential Privacy",
+        "title_fa": ""
+      },
+      "05-Differential-Privacy-by-Individual-Ranking-Microaggregation": {
+        "title_en": "Differential Privacy by Individual Ranking Microaggregation",
         "title_fa": ""
       }
     }
