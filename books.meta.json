@@ -1140,5 +1140,37 @@
         "title_fa": ""
       }
     }
+  },
+  "lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic": {
+    "title_en": "Lean Analytic",
+    "translated_fa": false,
+    "note_fa": "الیستر کرول و بنجامین یاسکوویتز در این کتاب، که در واقع مکمل کتاب معروف Lean Startup است، پاسخ می‌دهند به این پرسش: از میان ده‌ها شاخصی که یک استارتاپ می‌تواند اندازه بگیرد، واقعاً کدام‌یک اهمیت دارد؟ آن‌ها مفهوم «تنها شاخصی که اهمیت دارد» را معرفی می‌کنند: در هر مرحله از رشد کسب‌وکار، فقط یک عدد باید تمرکز تیم باشد، نه داشبوردی از ده‌ها آمار فریبنده. کتاب بر اساس نوع کسب‌وکار (فروشگاه اینترنتی، اپلیکیشن موبایل، رسانه، SaaS و غیره) و مرحله‌ی رشد، معیارها و آستانه‌های واقعی ارائه می‌دهد. کتابی عملی برای بنیان‌گذاران و مدیران محصولی که می‌خواهند به‌جای حدس‌زدن، بر اساس داده تصمیم بگیرند.",
+    "title_fa": "تحلیل ناب",
+    "author": "Alistair Croll, Benjamin Yoskovitz",
+    "cover": "lean_analitycs.jpg",
+    "note_en": "",
+    "categories": [
+      "computer science",
+      "Data Science",
+      "start-up"
+    ],
+    "chapters": {
+      "00-Part-One-Stop-Lying-to-Yourself": {
+        "title_en": "Part One Stop Lying to Yourself",
+        "title_fa": ""
+      },
+      "01-Part-Two-Finding-the-Right-Metric-for-Right-Now": {
+        "title_en": "Part Two Finding the Right Metric for Right Now",
+        "title_fa": ""
+      },
+      "02-Part-Three-Lines-in-the-Sand": {
+        "title_en": "Part Three Lines in the Sand",
+        "title_fa": ""
+      },
+      "03-Part-Four-Putting-Lean-Analytics-to-Work": {
+        "title_en": "Part Four Putting Lean Analytics to Work",
+        "title_fa": ""
+      }
+    }
   }
 }

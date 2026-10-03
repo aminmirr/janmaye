@@ -1430,6 +1430,78 @@
       }
     },
     {
+      "slug": "lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic",
+      "title": "Lean OReilly Alistair Croll Benjamin Yoskovitz Lean Analytic",
+      "episodes": {
+        "English": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/whole_book_en.m4a",
+            "seconds": 1737
+          },
+          {
+            "title": "Part One Stop Lying to Yourself",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/00-Part-One-Stop-Lying-to-Yourself_en.m4a",
+            "seconds": 1565
+          },
+          {
+            "title": "Part Two Finding the Right Metric for Right Now",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/01-Part-Two-Finding-the-Right-Metric-for-Right-Now_en.m4a",
+            "seconds": 1453
+          },
+          {
+            "title": "Part Three Lines in the Sand",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/02-Part-Three-Lines-in-the-Sand_en.m4a",
+            "seconds": 1465
+          },
+          {
+            "title": "Part Four Putting Lean Analytics to Work",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/03-Part-Four-Putting-Lean-Analytics-to-Work_en.m4a",
+            "seconds": 1511
+          }
+        ],
+        "Persian": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/whole_book_fa.m4a",
+            "seconds": 1528
+          },
+          {
+            "title": "Part One Stop Lying to Yourself",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/00-Part-One-Stop-Lying-to-Yourself_fa.m4a",
+            "seconds": 889
+          },
+          {
+            "title": "Part Two Finding the Right Metric for Right Now",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/01-Part-Two-Finding-the-Right-Metric-for-Right-Now_fa.m4a",
+            "seconds": 1282
+          },
+          {
+            "title": "Part Three Lines in the Sand",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/02-Part-Three-Lines-in-the-Sand_fa.m4a",
+            "seconds": 1096
+          },
+          {
+            "title": "Part Four Putting Lean Analytics to Work",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/03-Part-Four-Putting-Lean-Analytics-to-Work_fa.m4a",
+            "seconds": 770
+          }
+        ]
+      },
+      "zips": {
+        "English": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic-en.zip",
+          "bytes": 64848166,
+          "count": 5
+        },
+        "Persian": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic/lean-oreilly-alistair-croll-benjamin-yoskovitz-lean-analytic-fa.zip",
+          "bytes": 46691365,
+          "count": 5
+        }
+      }
+    },
+    {
       "slug": "parmenter-david-key-performance-indicators-developing-implem",
       "title": "Parmenter David Key performance indicators developing implem",
       "episodes": {
