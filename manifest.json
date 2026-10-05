@@ -1502,6 +1502,98 @@
       }
     },
     {
+      "slug": "learningdomain-drivendesign",
+      "title": "LearningDomain DrivenDesign",
+      "episodes": {
+        "English": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/whole_book_en.m4a",
+            "seconds": 1297
+          },
+          {
+            "title": "Introduction",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/00-Introduction_en.m4a",
+            "seconds": 1097
+          },
+          {
+            "title": "Part I Strategic Design",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/01-Part-I-Strategic-Design_en.m4a",
+            "seconds": 1500
+          },
+          {
+            "title": "Part II Tactical Design",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/02-Part-II-Tactical-Design_en.m4a",
+            "seconds": 1626
+          },
+          {
+            "title": "Part III Applying Domain Driven Design in Practice",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/03-Part-III-Applying-Domain-Driven-Design-in-Practice_en.m4a",
+            "seconds": 1550
+          },
+          {
+            "title": "Part IV Relationships to Other Methodologies and Patterns",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/04-Part-IV-Relationships-to-Other-Methodologies-and-Patterns_en.m4a",
+            "seconds": 1487
+          },
+          {
+            "title": "Closing Words",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/05-Closing-Words_en.m4a",
+            "seconds": 1265
+          }
+        ],
+        "Persian": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/whole_book_fa.m4a",
+            "seconds": 977
+          },
+          {
+            "title": "Introduction",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/00-Introduction_fa.m4a",
+            "seconds": 1010
+          },
+          {
+            "title": "Part I Strategic Design",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/01-Part-I-Strategic-Design_fa.m4a",
+            "seconds": 892
+          },
+          {
+            "title": "Part II Tactical Design",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/02-Part-II-Tactical-Design_fa.m4a",
+            "seconds": 1207
+          },
+          {
+            "title": "Part III Applying Domain Driven Design in Practice",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/03-Part-III-Applying-Domain-Driven-Design-in-Practice_fa.m4a",
+            "seconds": 1329
+          },
+          {
+            "title": "Part IV Relationships to Other Methodologies and Patterns",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/04-Part-IV-Relationships-to-Other-Methodologies-and-Patterns_fa.m4a",
+            "seconds": 1641
+          },
+          {
+            "title": "Closing Words",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/05-Closing-Words_fa.m4a",
+            "seconds": 1387
+          }
+        ]
+      },
+      "zips": {
+        "English": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/learningdomain-drivendesign-en.zip",
+          "bytes": 82457782,
+          "count": 7
+        },
+        "Persian": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-learningdomain-drivendesign/learningdomain-drivendesign-fa.zip",
+          "bytes": 70809042,
+          "count": 7
+        }
+      }
+    },
+    {
       "slug": "parmenter-david-key-performance-indicators-developing-implem",
       "title": "Parmenter David Key performance indicators developing implem",
       "episodes": {

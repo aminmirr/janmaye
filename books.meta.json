@@ -1172,5 +1172,44 @@
         "title_fa": ""
       }
     }
+  },
+  "learningdomain-drivendesign": {
+    "title_en": "Learning Domain-Driven Design",
+    "title_fa": "طراحی بر محور دامنه کسب و کار",
+    "author": "Vlad Khononov",
+    "cover": "Learning-Domain-Driven-Design.jpg",
+    "note_en": "",
+    "note_fa": "",
+    "translated_fa": null,
+    "categories": [
+      "computer science",
+      "Business"
+    ],
+    "chapters": {
+      "00-Introduction": {
+        "title_en": "Introduction",
+        "title_fa": ""
+      },
+      "01-Part-I-Strategic-Design": {
+        "title_en": "Part I Strategic Design",
+        "title_fa": ""
+      },
+      "02-Part-II-Tactical-Design": {
+        "title_en": "Part II Tactical Design",
+        "title_fa": ""
+      },
+      "03-Part-III-Applying-Domain-Driven-Design-in-Practice": {
+        "title_en": "Part III Applying Domain Driven Design in Practice",
+        "title_fa": ""
+      },
+      "04-Part-IV-Relationships-to-Other-Methodologies-and-Patterns": {
+        "title_en": "Part IV Relationships to Other Methodologies and Patterns",
+        "title_fa": ""
+      },
+      "05-Closing-Words": {
+        "title_en": "Closing Words",
+        "title_fa": ""
+      }
+    }
   }
 }
