@@ -1,9 +1,9 @@
-"""Categories are picked from what's in use, so they stop drifting.
+"""Categories come from a closed taxonomy (categories.json): groups, each with
+subgenres, each with an id and English + Persian names. A book stores subgenre ids.
 
-Free-typing produced the mess this fixes: Data alongside Data Science, Finance
-alongside Personal Finance, and seven of twelve categories used exactly once.
+Free-typing produced the mess this replaced: Data alongside Data Science, lowercase
+'computer science', and categories used exactly once.
 
-Runs against a COPY of books.meta.json — never the live file.
 Run: python3 test_categories.py
 """
 import importlib.util
@@ -17,86 +17,76 @@ s = importlib.util.spec_from_file_location("bs", Path(__file__).with_name("build
 m = importlib.util.module_from_spec(s)
 s.loader.exec_module(m)
 
-META = {
-    "a": {"categories": ["Business", "Management"]},
-    "b": {"categories": ["Business", "Data"]},
-    "c": {"categories": ["Data Science"]},
-    "d": {"categories": []},
-}
+tax = m.load_taxonomy()
+subs = m.flat_subs(tax)
 
+# ── the shipped taxonomy is well-formed ───────────────────────────────────────
 
-# ── the list is whatever books use ────────────────────────────────────────────
+ids = [x["id"] for x in subs]
+assert len(ids) == len(set(ids)), "subgenre ids are unique"
+assert all(x["en"] and x["fa"] for x in subs), "every subgenre has both names"
+assert all(g["en"] and g["fa"] and g["subs"] for g in tax["groups"]), "every group too, non-empty"
+assert 6 <= len(tax["groups"]) <= 10, "a handful of broad groups, like the big sites"
+# flat numbering follows group order and carries the group
+assert subs[0]["group"] == tax["groups"][0]["id"] and subs[0]["id"] == tax["groups"][0]["subs"][0]["id"]
 
-counts = m.category_counts(META)
-assert counts == {"Business": 2, "Data": 1, "Data Science": 1, "Management": 1}, counts
-assert list(counts) == sorted(counts), "sorted, so the numbering is stable between runs"
-assert m.category_counts({}) == {}
+# ── every published book's categories exist in it (the migration's contract) ──
 
+live = json.loads(Path(__file__).with_name("books.meta.json").read_text())
+assert m.unknown_ids(live, tax) == {}, m.unknown_ids(live, tax)
+assert all(1 <= len(e["categories"]) <= m.MAX_CATEGORIES for e in live.values()), \
+    "every published book has 1–3 categories"
 
 # ── parsing what you type ─────────────────────────────────────────────────────
 
-known = list(counts)                       # Business, Data, Data Science, Management
+econ = next(x for x in subs if x["id"] == "economics")
+n_econ = subs.index(econ) + 1
 
-assert m.parse_categories("1", known) == ["Business"]
-assert m.parse_categories("1,4", known) == ["Business", "Management"]
-assert m.parse_categories(" 1 , 4 ", known) == ["Business", "Management"]
+assert m.parse_categories(str(n_econ), subs) == (["economics"], [])
+assert m.parse_categories("economics", subs) == (["economics"], [])          # id
+assert m.parse_categories("ECONOMICS", subs) == (["economics"], [])          # name, any casing
+assert m.parse_categories("اقتصاد", subs) == (["economics"], [])             # Persian name
+assert m.parse_categories(" Finance &  Investing ", subs) == (["finance-investing"], [])
+# numbers, ids and names mix; order kept; no repeats
+got, bad = m.parse_categories(f"{n_econ}, creativity, اقتصاد", subs)
+assert got == ["economics", "creativity"] and bad == [], (got, bad)
+# capped at three
+got, _ = m.parse_categories("1,2,3,4,5", subs)
+assert len(got) == m.MAX_CATEGORIES == 3
+# the list is closed: anything else is handed back, never stored
+assert m.parse_categories("Brand New, economics", subs) == (["economics"], ["Brand New"])
+assert m.parse_categories("999", subs) == ([], ["999"])
+assert m.parse_categories("", subs) == ([], [])
 
-# a new name is taken as typed
-assert m.parse_categories("Design", known) == ["Design"]
-# numbers and new names mix in one line
-assert m.parse_categories("1, Design", known) == ["Business", "Design"]
+# ── stale names are reported ──────────────────────────────────────────────────
 
-# typing an existing name resolves to it whatever the casing — case drift is most of
-# how the current mess happened
-assert m.parse_categories("business", known) == ["Business"]
-assert m.parse_categories("DATA SCIENCE", known) == ["Data Science"]
+assert m.unknown_ids({"a": {"categories": ["Data Science", "economics"]}, "b": {"categories": []}}, tax) \
+    == {"a": ["Data Science"]}
 
-# capped, and never repeats one
-assert m.parse_categories("1,2,3,4", known) == ["Business", "Data", "Data Science"]
-assert m.parse_categories("1,1,2", known) == ["Business", "Data"]
-assert len(m.parse_categories("a,b,c,d,e", known)) == m.MAX_CATEGORIES
+# ── usage counts are by id ────────────────────────────────────────────────────
 
-# out-of-range numbers are names, not crashes
-assert m.parse_categories("99", known) == ["99"]
-assert m.parse_categories("", known) == []
-
-
-# ── renaming, which is also merging ───────────────────────────────────────────
-
-meta = json.loads(json.dumps(META))
-touched = m.rename_category(meta, "Data", "Data Science")
-assert touched == ["b"], touched
-assert meta["b"]["categories"] == ["Business", "Data Science"]
-assert meta["a"]["categories"] == ["Business", "Management"], "other books untouched"
-assert m.category_counts(meta)["Data Science"] == 2
-
-# a book holding both names ends up with one, not a duplicate
-meta = {"x": {"categories": ["Data", "Data Science"]}}
-m.rename_category(meta, "Data", "Data Science")
-assert meta["x"]["categories"] == ["Data Science"], meta
-
-# renaming something nobody uses changes nothing
-meta = json.loads(json.dumps(META))
-assert m.rename_category(meta, "Nope", "Other") == []
-assert meta == META
-
-# a book with no categories is not given one
-assert "categories" in META["d"] and META["d"]["categories"] == []
-
+assert m.category_counts({"a": {"categories": ["economics", "creativity"]},
+                          "b": {"categories": ["economics"]}, "c": {}}) \
+    == {"economics": 2, "creativity": 1}
 
 # ── the prompt ────────────────────────────────────────────────────────────────
 
 def ask(typed, current=()):
     tmp = Path(tempfile.mkdtemp()) / "books.meta.json"
-    tmp.write_text(json.dumps(META))
+    tmp.write_text("{}")
     m.META = tmp
-    sys.stdin = io.StringIO(typed + "\n")
-    sys.stdin.isatty = lambda: True
-    return m.ask_categories(list(current), META)
+    sys.stdin = io.StringIO(typed)
+    sys.stdout, real = io.StringIO(), sys.stdout
+    try:
+        return m.ask_categories(list(current), {})
+    finally:
+        sys.stdout = real
 
-assert ask("1, Design") == ["Business", "Design"]
-# Enter keeps what the book already had, rather than clearing it
-assert ask("", current=["Career"]) == ["Career"]
-assert ask("") == []
+assert ask(f"{n_econ}, creativity\n") == ["economics", "creativity"]
+# Enter keeps what the book already had
+assert ask("\n", current=["creativity"]) == ["creativity"]
+assert ask("\n") == []
+# a name that isn't on the list is refused and asked again
+assert ask("Brand New\neconomics\n") == ["economics"]
 
 print("ok")

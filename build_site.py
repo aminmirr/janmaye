@@ -8,7 +8,7 @@ Usage:
     python build_site.py --all           # every book under BOOKS_ROOT
     python build_site.py --no-shrink     # never transcode, even a 256k original
     python build_site.py X --upload-only # upload + manifest only; no prompts, no commit
-    python build_site.py --categories    # rename or merge a category across all books
+    python build_site.py --categories    # list the categories (numbers, names, usage)
     python build_site.py X --force-upload # re-send every asset, ignoring what's there
 
 Files are transcoded to 64k mono AAC only if they aren't already small — audio the
@@ -368,7 +368,7 @@ def seed_meta(manifest: dict) -> None:
         for k in ("title_fa", "author", "cover", "note_en", "note_fa"):
             e.setdefault(k, "")
         e.setdefault("translated_fa", None)      # True/False once checked; None = unknown, no badge
-        e.setdefault("categories", [])          # up to 3 strings
+        e.setdefault("categories", [])          # up to 3 subgenre ids from categories.json
         chs = e.setdefault("chapters", {})       # chapter_key -> {title_en, title_fa}
         for eps in b["episodes"].values():
             for ep in eps:
@@ -400,6 +400,12 @@ def clean_cover_path(raw: str) -> str:
     doesn't need re-fixing at every call site — or worse, in the file by hand.
     index.html defends the same way at render time, for whatever is already
     sitting in the file from before this existed."""
+    p = _strip_quotes(raw)
+    # A bare filename means a file in covers/: stored as typed it resolved to nothing.
+    return f"covers/{p}" if p and "/" not in p and ":" not in p else p
+
+
+def _strip_quotes(raw: str) -> str:
     return str(raw or "").strip().strip("'\"").strip()
 
 
@@ -410,119 +416,105 @@ def pick_cover(current: str) -> str:
     print("    (drop the image in covers/ first, then pick a number — or paste a URL)")
     for i, f in enumerate(files, 1):
         print(f"    [{i}] {f}")
-    raw = clean_cover_path(input(f"  Cover{f' [{current}]' if current else ''}: "))
+    raw = _strip_quotes(input(f"  Cover{f' [{current}]' if current else ''}: "))
     if raw.isdigit() and 1 <= int(raw) <= len(files):
         return f"covers/{files[int(raw) - 1]}"
+    if raw in files:                       # typed a filename that is really in covers/
+        return f"covers/{raw}"
     return raw if "/" in raw else ""
 
 
 MAX_CATEGORIES = 3          # what the site renders per book
+TAXONOMY = SITE_DIR / "categories.json"
+
+
+def load_taxonomy() -> dict:
+    """The closed list of categories: groups, each with subgenres, each with an id and
+    an English + Persian name. A book stores subgenre ids; its groups are derived."""
+    return json.loads(TAXONOMY.read_text())
+
+
+def flat_subs(tax: dict) -> list[dict]:
+    """Every subgenre in display order, tagged with its group — the numbering the
+    prompt and the wizard both show."""
+    return [{**sub, "group": g["id"], "group_en": g["en"], "group_fa": g["fa"]}
+            for g in tax["groups"] for sub in g["subs"]]
 
 
 def category_counts(meta: dict) -> dict[str, int]:
-    """Every category in use, and how many books use it.
-
-    There is no separate vocabulary file: the list *is* what books have. A category
-    exists while some book carries it and disappears when the last one drops it, so
-    it can never drift out of step with what the site actually shows.
-    """
+    """How many books carry each subgenre id (only ids in use appear)."""
     counts: dict[str, int] = {}
     for entry in meta.values():
         for cat in entry.get("categories") or []:
             counts[cat] = counts.get(cat, 0) + 1
-    return dict(sorted(counts.items()))
+    return counts
 
 
-def parse_categories(raw: str, known: list[str]) -> list[str]:
-    """Numbers pick from the list, anything else is a new name, and both can be mixed.
+def _norm(text: str) -> str:
+    return " ".join(text.lower().split())
 
-    A typed name that already exists resolves to it whatever the casing, so "business"
-    never appears alongside "Business" — case drift is most of how the current mess
-    happened.
-    """
+
+def parse_categories(raw: str, subs: list[dict]) -> tuple[list[str], list[str]]:
+    """(chosen ids, unrecognised words). A part may be the list number, the id, or the
+    English / Persian name in any casing. The list is closed: anything else is reported
+    back, never stored — free-typing is how 'Data' ended up beside 'Data Science'."""
+    lookup: dict[str, str] = {}
+    for sub in subs:
+        for key in (sub["id"], sub["en"], sub["fa"]):
+            lookup[_norm(key)] = sub["id"]
     chosen: list[str] = []
-    lookup = {k.lower(): k for k in known}
+    unknown: list[str] = []
     for part in raw.split(","):
         part = part.strip()
         if not part:
             continue
-        if part.isdigit() and 1 <= int(part) <= len(known):
-            pick = known[int(part) - 1]
+        if part.isdigit() and 1 <= int(part) <= len(subs):
+            pick = subs[int(part) - 1]["id"]
         else:
-            pick = lookup.get(part.lower(), part)
-        if pick not in chosen:
+            pick = lookup.get(_norm(part))
+        if pick is None:
+            unknown.append(part)
+        elif pick not in chosen:
             chosen.append(pick)
-    return chosen[:MAX_CATEGORIES]
+    return chosen[:MAX_CATEGORIES], unknown
+
+
+def unknown_ids(meta: dict, tax: dict) -> dict[str, list[str]]:
+    """slug -> category ids that are not in the taxonomy (e.g. a pre-redesign name)."""
+    valid = {s["id"] for s in flat_subs(tax)}
+    return {slug: bad for slug, e in meta.items()
+            if (bad := [c for c in e.get("categories") or [] if c not in valid])}
+
+
+def print_taxonomy(tax: dict, counts: dict[str, int] | None = None) -> None:
+    counts = counts or {}
+    n = 0
+    for g in tax["groups"]:
+        print(f"\n  {g['en']}  ·  {g['fa']}")
+        for sub in g["subs"]:
+            n += 1
+            used = f" ({counts[sub['id']]})" if sub["id"] in counts else ""
+            print(f"    [{n:>2}] {sub['en']}{used}")
 
 
 def ask_categories(current: list[str], meta: dict) -> list[str]:
-    """Show what's in use with its usage count, then take numbers and/or new names.
-
-    The counts are the whole mechanism: seeing "Business (3)" beside "Data (1)" is what
-    makes an established name the easy choice. Nothing forbids a new one.
-    """
-    counts = category_counts(meta)
-    known = list(counts)
-    if known:
-        print("\n  Categories — pick numbers, or type a new name")
-        half = (len(known) + 1) // 2
-        for i in range(half):
-            left = f"[{i+1}] {known[i]} ({counts[known[i]]})"
-            j = i + half
-            right = f"[{j+1}] {known[j]} ({counts[known[j]]})" if j < len(known) else ""
-            print(f"  {left:<28}{right}")
+    """Show the groups with their subgenres, take numbers (or names), ask again on
+    anything not on the list. Enter keeps what the book has."""
+    tax = load_taxonomy()
+    subs = flat_subs(tax)
+    print("\n  Categories — pick numbers from the list")
+    print_taxonomy(tax, category_counts(meta))
     shown = f" [{', '.join(current)}]" if current else ""
-    raw = input(f"  Choose (max {MAX_CATEGORIES}){shown}: ").strip()
-    return parse_categories(raw, known) if raw else current
-
-
-def manage_categories() -> None:
-    """Rename a category everywhere. Renaming onto an existing name merges them —
-    the same operation, so there is no separate merge command."""
-    meta = json.loads(META.read_text())
     while True:
-        counts = category_counts(meta)
-        known = list(counts)
-        if not known:
-            print("  No categories in use yet.")
-            return
-        print("\n  Categories in use")
-        for i, cat in enumerate(known, 1):
-            print(f"  [{i:>2}] {cat} ({counts[cat]})")
-        raw = input("\n  Rename which? (number, q to finish): ").strip().lower()
-        if raw in ("q", ""):
-            return
-        if not raw.isdigit() or not 1 <= int(raw) <= len(known):
-            print("  Not a valid choice.")
+        raw = input(f"\n  Choose (max {MAX_CATEGORIES}){shown}: ").strip()
+        if not raw:
+            return current
+        chosen, unknown = parse_categories(raw, subs)
+        if unknown:
+            print(f"  Not on the list: {', '.join(unknown)}. "
+                  "(Add a new one to categories.json first.)")
             continue
-        old = known[int(raw) - 1]
-        new = input(f"  New name for {old!r} (an existing name merges them): ").strip()
-        if not new or new == old:
-            continue
-        new = {k.lower(): k for k in known}.get(new.lower(), new)
-        touched = rename_category(meta, old, new)
-        META.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n")
-        verb = "merged into" if new in known else "renamed to"
-        print(f"  → {old} {verb} {new} in {len(touched)} book(s): "
-              f"{', '.join(t[:28] for t in touched) or '—'}")
-
-
-def rename_category(meta: dict, old: str, new: str) -> list[str]:
-    """Apply the rename in place; returns the slugs changed. De-duplicates, since a
-    book holding both names must end up with one."""
-    touched = []
-    for slug, entry in meta.items():
-        cats = entry.get("categories") or []
-        if old not in cats:
-            continue
-        renamed = []
-        for c in cats:
-            c = new if c == old else c
-            if c not in renamed:
-                renamed.append(c)
-        entry["categories"] = renamed
-        touched.append(slug)
-    return touched
+        return chosen
 
 
 def ask_meta(names: list[str]) -> None:
@@ -563,7 +555,10 @@ def apply_meta_flags(name: str, title_en: str, title_fa: str, author: str,
     e["title_fa"] = title_fa
     e["author"] = author
     e["cover"] = clean_cover_path(cover)
-    e["categories"] = parse_categories(categories_raw, list(category_counts(meta)))
+    chosen, unknown = parse_categories(categories_raw, flat_subs(load_taxonomy()))
+    if unknown:
+        sys.exit(f"unknown categories: {', '.join(unknown)} — see `python build_site.py --categories`")
+    e["categories"] = chosen
     META.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n")
 
 
@@ -614,7 +609,7 @@ def main() -> None:
     upload_only = "--upload-only" in args
     force = "--force-upload" in args
     if "--categories" in args:
-        manage_categories()
+        print_taxonomy(load_taxonomy(), category_counts(json.loads(META.read_text())))
         return
     # The wizard's non-interactive metadata path: every field arrives as its own
     # flag rather than through ask_meta()'s prompts. --push opts into commit_and_push's

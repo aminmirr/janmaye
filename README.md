@@ -13,6 +13,19 @@ or re-uploaded any existing episode.
 Each book has one **whole-book** episode (standalone overview) plus one episode
 **per chapter**. Two languages per book where available.
 
+## Categories
+
+`categories.json` is the closed list: **groups** (Business & Management, Money &
+Economics, …) each holding **subgenres**, every one with an `id` and English + Persian
+names. A book stores up to 3 subgenre ids in `books.meta.json`; its groups are derived.
+The site's filter bar shows the groups, and choosing one reveals its subgenres.
+
+- List them: `python build_site.py --categories` (numbers, names, usage counts).
+- Publishing takes numbers, ids or names (either language); anything not on the list is
+  refused. A new subgenre means adding it to `categories.json` first.
+- `docs/category-taxonomy.md` has the reasoning and the original assignment of the first
+  21 books (`migrate_categories.py` applied it, once).
+
 ## How it's put together
 
 | Layer | Where | Notes |
@@ -35,7 +48,7 @@ python build_site.py --all                 # every book with audio
 
 Drop the cover image in `covers/` first. After uploading, the script asks for the
 book's titles (EN/FA), author, cover (pick from a numbered list of `covers/`, or paste
-a URL) and up to 3 categories, writes them into `books.meta.json`, then offers to
+a URL) and up to 3 categories (picked from the fixed list in `categories.json`), writes them into `books.meta.json`, then offers to
 commit and push. It only asks about books that don't already have an author and a
 cover, so republishing is silent. Everything else — chapter titles, notes — stays a
 file edit.
@@ -81,7 +94,7 @@ English half. It also means the button always matches the language on screen.
   "cover":    "covers/show-your-work.jpg",     // repo path OR full https:// URL
   "note_en":  "One-line description",
   "note_fa":  "توضیح کوتاه",
-  "categories": ["Creativity", "Career"],      // up to 3; clickable filters on the site
+  "categories": ["creativity", "productivity-career"],  // up to 3 subgenre ids from categories.json
   "chapters": {                                 // per-chapter title overrides (EN/FA)
     "00-A-New-Way-of-Operating": { "title_en": "A New Way of Operating", "title_fa": "" }
   }

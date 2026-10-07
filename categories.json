@@ -1,0 +1,195 @@
+{
+  "groups": [
+    {
+      "id": "business",
+      "en": "Business & Management",
+      "fa": "کسب‌وکار و مدیریت",
+      "subs": [
+        {
+          "id": "management-leadership",
+          "en": "Management & Leadership",
+          "fa": "مدیریت و رهبری"
+        },
+        {
+          "id": "startups-entrepreneurship",
+          "en": "Startups & Entrepreneurship",
+          "fa": "کارآفرینی و استارتاپ"
+        },
+        {
+          "id": "strategy-performance",
+          "en": "Strategy & Performance",
+          "fa": "استراتژی و سنجش عملکرد"
+        },
+        {
+          "id": "marketing-sales",
+          "en": "Marketing & Sales",
+          "fa": "بازاریابی و فروش"
+        }
+      ]
+    },
+    {
+      "id": "money",
+      "en": "Money & Economics",
+      "fa": "پول و اقتصاد",
+      "subs": [
+        {
+          "id": "economics",
+          "en": "Economics",
+          "fa": "اقتصاد"
+        },
+        {
+          "id": "finance-investing",
+          "en": "Finance & Investing",
+          "fa": "مالی و سرمایه‌گذاری"
+        },
+        {
+          "id": "personal-finance",
+          "en": "Personal Finance",
+          "fa": "مالی شخصی"
+        }
+      ]
+    },
+    {
+      "id": "technology",
+      "en": "Technology & Computing",
+      "fa": "فناوری و رایانش",
+      "subs": [
+        {
+          "id": "software-engineering",
+          "en": "Software Engineering",
+          "fa": "مهندسی نرم‌افزار"
+        },
+        {
+          "id": "databases-data-systems",
+          "en": "Databases & Data Systems",
+          "fa": "پایگاه داده"
+        },
+        {
+          "id": "data-science-analytics",
+          "en": "Data Science & Analytics",
+          "fa": "علم داده و تحلیل"
+        },
+        {
+          "id": "ai-machine-learning",
+          "en": "AI & Machine Learning",
+          "fa": "هوش مصنوعی"
+        },
+        {
+          "id": "privacy-security",
+          "en": "Privacy & Security",
+          "fa": "حریم خصوصی و امنیت"
+        }
+      ]
+    },
+    {
+      "id": "science",
+      "en": "Science & Math",
+      "fa": "علم و ریاضی",
+      "subs": [
+        {
+          "id": "statistics-mathematics",
+          "en": "Statistics & Mathematics",
+          "fa": "آمار و ریاضی"
+        },
+        {
+          "id": "nature-life-sciences",
+          "en": "Nature & Life Sciences",
+          "fa": "طبیعت و علوم زیستی"
+        },
+        {
+          "id": "food-health",
+          "en": "Food & Health",
+          "fa": "غذا و سلامت"
+        },
+        {
+          "id": "systems-complexity",
+          "en": "Systems & Complexity",
+          "fa": "سیستم‌ها و پیچیدگی"
+        }
+      ]
+    },
+    {
+      "id": "society",
+      "en": "Politics & Society",
+      "fa": "سیاست و جامعه",
+      "subs": [
+        {
+          "id": "political-theory",
+          "en": "Political Theory",
+          "fa": "نظریه‌ی سیاسی"
+        },
+        {
+          "id": "democracy-authoritarianism",
+          "en": "Democracy & Authoritarianism",
+          "fa": "دموکراسی و استبداد"
+        },
+        {
+          "id": "sociology-culture",
+          "en": "Sociology & Culture",
+          "fa": "جامعه‌شناسی و فرهنگ"
+        }
+      ]
+    },
+    {
+      "id": "mind",
+      "en": "Mind & Philosophy",
+      "fa": "ذهن و فلسفه",
+      "subs": [
+        {
+          "id": "philosophy",
+          "en": "Philosophy",
+          "fa": "فلسفه"
+        },
+        {
+          "id": "psychology",
+          "en": "Psychology",
+          "fa": "روان‌شناسی"
+        },
+        {
+          "id": "thinking-decisions",
+          "en": "Thinking & Decision-making",
+          "fa": "تفکر و تصمیم‌گیری"
+        }
+      ]
+    },
+    {
+      "id": "self",
+      "en": "Self-Development",
+      "fa": "رشد فردی",
+      "subs": [
+        {
+          "id": "productivity-career",
+          "en": "Productivity & Career",
+          "fa": "بهره‌وری و شغل"
+        },
+        {
+          "id": "creativity",
+          "en": "Creativity",
+          "fa": "خلاقیت"
+        },
+        {
+          "id": "life-design",
+          "en": "Life Design",
+          "fa": "سبک زندگی"
+        }
+      ]
+    },
+    {
+      "id": "history",
+      "en": "History & Biography",
+      "fa": "تاریخ و زندگی‌نامه",
+      "subs": [
+        {
+          "id": "world-history",
+          "en": "World History",
+          "fa": "تاریخ جهان"
+        },
+        {
+          "id": "biography",
+          "en": "Biography",
+          "fa": "زندگی‌نامه"
+        }
+      ]
+    }
+  ]
+}

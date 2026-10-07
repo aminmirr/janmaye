@@ -13,6 +13,7 @@ const grab = (start, end) => {
   return html.slice(i, j + end.length);
 };
 const src = grab("const norm =", '.replace(/\\s+/g, " ").trim();')
+          + "\n" + grab("let TAX =", "const catGroup = id => (SUBIDX.get(id) || {}).group;")
           + "\n" + grab("function matchBook(b){", "\n}");
 
 // Minimal stand-ins for the page globals matchBook closes over. split()/chTitle()
@@ -26,11 +27,14 @@ const harness = `
   const bookCats = slug => (META[slug] && META[slug].categories) || [];
   const split = (b, lang) => ({ chapters: (b.episodes && b.episodes[lang]) || b.chapters || [] });
   const chTitle = (slug, c, lang) => c.title;
-  module.exports = { norm, matchBook, setQ: v => { Q = norm(v); } };
+  module.exports = { norm, matchBook, setTaxonomy, setQ: v => { Q = norm(v); } };
 `;
 const mod = { exports: {} };
 new Function("META", "module", "let Q;" + harness)(ctx.META, mod);
-const { norm, matchBook, setQ } = mod.exports;
+const { norm, matchBook, setQ, setTaxonomy } = mod.exports;
+setTaxonomy({ groups: [{ id: "self", en: "Self-Development", fa: "رشد فردی", subs: [
+  { id: "creativity", en: "Creativity", fa: "خلاقیت" },
+  { id: "productivity-career", en: "Productivity & Career", fa: "بهره‌وری و شغل" }] }] });
 
 /* ---- norm(): the Persian folding that makes the box usable at all ---- */
 assert.strictEqual(norm("خلاصه‌های"), "خلاصه های", "ZWNJ folds to a space");
@@ -44,14 +48,16 @@ const BOOK = { slug: "syw", title: "Show your work",
                           { title: "Teach What You Know" }] };
 ctx.META.syw = { title_en: "Show Your Work!", title_fa: "کارت را نشان بده",
                  author: "Austin Kleon", note_en: "On sharing your process",
-                 categories: ["Creativity", "Career"] };
+                 categories: ["creativity", "productivity-career"] };
 
 const hit = q => { setQ(q); return matchBook(BOOK); };
 
 assert.strictEqual(hit("").viaChapter, false, "empty query matches everything");
 assert.ok(hit("kleon"), "author");
 assert.ok(hit("SHOW YOUR"), "title, case-insensitive");
-assert.ok(hit("creativity"), "category");
+assert.ok(hit("creativity"), "category, by its English name");
+assert.ok(hit("خلاقیت"), "category, by its Persian name");
+assert.ok(hit("Productivity"), "second category");
 assert.ok(hit("sharing"), "note");
 assert.ok(hit("نشان"), "Persian title");
 assert.ok(hit("کارت را نشان"), "Persian phrase");

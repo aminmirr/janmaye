@@ -32,13 +32,13 @@ def with_meta(meta_entry: dict) -> Path:
 # 1. Every field lands exactly as given — no prompting, no "Enter keeps it".
 tmp = with_meta(blank)
 m.apply_meta_flags(BOOK, "Show Your Work!", "کارت را نشان بده", "Austin Kleon",
-                   "covers/x.jpg", "Creativity,Career")
+                   "covers/x.jpg", "Creativity,productivity-career")
 e = json.loads(tmp.read_text())[SLUG]
 assert e["title_en"] == "Show Your Work!", e
 assert e["title_fa"] == "کارت را نشان بده", e
 assert e["author"] == "Austin Kleon", e
 assert e["cover"] == "covers/x.jpg", e
-assert e["categories"] == ["Creativity", "Career"], e
+assert e["categories"] == ["creativity", "productivity-career"], e   # name and id both resolve to ids
 
 # 1b. A --cover flag with stray wrapping quotes (typed into the dashboard's
 # publish wizard, or passed by hand) is cleaned the same way pick_cover() is —
@@ -49,21 +49,36 @@ m.apply_meta_flags(BOOK, "T", "", "A", "'covers/typo with quotes.jpg'", "")
 e = json.loads(tmp.read_text())[SLUG]
 assert e["cover"] == "covers/typo with quotes.jpg", e
 
+# 1c. A bare filename lands as a covers/ path (the two published books that shipped
+# without a cover typed it that way).
+tmp = with_meta(blank)
+m.apply_meta_flags(BOOK, "T", "", "A", "lean_analitycs.jpg", "")
+assert json.loads(tmp.read_text())[SLUG]["cover"] == "covers/lean_analitycs.jpg"
+tmp = with_meta(blank)
+m.apply_meta_flags(BOOK, "T", "", "A", "https://example.com/x.jpg", "")
+assert json.loads(tmp.read_text())[SLUG]["cover"] == "https://example.com/x.jpg", "URLs untouched"
+
 # 2. An empty categories string clears them, same as choosing none interactively.
-tmp = with_meta({**blank, "categories": ["Old"]})
+tmp = with_meta({**blank, "categories": ["creativity"]})
 m.apply_meta_flags(BOOK, "T", "", "A", "", "")
 e = json.loads(tmp.read_text())[SLUG]
 assert e["categories"] == [], e
 
-# 3. Numbers resolve against the site's existing categories, same as ask_categories().
+# 3. Numbers and Persian names resolve against the closed taxonomy, same as
+# ask_categories(); the list is numbered in categories.json order.
 tmp = with_meta(blank)
-other_slug = "other-book"
-meta = json.loads(tmp.read_text())
-meta[other_slug] = {**blank, "categories": ["Business", "Data"]}
-tmp.write_text(json.dumps(meta))
-m.apply_meta_flags(BOOK, "T", "", "A", "", "1,New")
+m.apply_meta_flags(BOOK, "T", "", "A", "", "1,خلاقیت")
 e = json.loads(tmp.read_text())[SLUG]
-assert e["categories"] == ["Business", "New"], e
+assert e["categories"] == ["management-leadership", "creativity"], e
+
+# 3b. A name that is not on the list stops the publish instead of being stored.
+tmp = with_meta(blank)
+try:
+    m.apply_meta_flags(BOOK, "T", "", "A", "", "creativity,Brand New")
+    raise AssertionError("an unknown category must not be accepted")
+except SystemExit as exc:
+    assert "Brand New" in str(exc), exc
+assert json.loads(tmp.read_text())[SLUG]["categories"] == [], "nothing written on refusal"
 
 # 4. No such book in the manifest: a no-op, not a KeyError.
 tmp = with_meta(blank)

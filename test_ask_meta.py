@@ -36,12 +36,12 @@ blank = {"title_en": "Show your work", "title_fa": "", "author": "", "cover": ""
 covers = sorted(p.name for p in (m.SITE_DIR / "covers").iterdir()
                 if p.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"))
 assert "README.md" not in covers, "only images are offered as covers"
-e = run(blank, "Show Your Work!\nکارت را نشان بده\nAustin Kleon\n1\nCreativity, Career, Art, Extra\n")
+e = run(blank, "Show Your Work!\nکارت را نشان بده\nAustin Kleon\n1\ncreativity, productivity-career, philosophy, psychology\n")
 assert e["title_en"] == "Show Your Work!", e
 assert e["title_fa"] == "کارت را نشان بده", e
 assert e["author"] == "Austin Kleon", e
 assert e["cover"] == f"covers/{covers[0]}", e
-assert e["categories"] == ["Creativity", "Career", "Art"], "capped at 3"
+assert e["categories"] == ["creativity", "productivity-career", "philosophy"], "capped at 3"
 
 # 2. Enter keeps the existing value instead of blanking it.
 e = run({**blank, "author": "Austin Kleon"}, "\n\n\n\n\n")

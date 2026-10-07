@@ -139,6 +139,8 @@ html[data-lang="fa"] .search input{ font-family:'Vazirmatn',sans-serif; }
 .cat[aria-pressed="true"]{ color:var(--ink); background:var(--accent); border-color:var(--accent); }
 .cat:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 html[data-lang="fa"] .cat{ font-family:'Vazirmatn',sans-serif; }
+.subcats{ margin-top:10px; }
+.subcats .cat{ font-size:.74rem; padding:4px 12px; }
 .book-cats{ display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
 .book-cats .cat{ font-size:.72rem; padding:4px 11px; }
 
@@ -300,6 +302,7 @@ html[data-lang="fa"] .sheet-actions button,html[data-lang="fa"] .sheet-actions a
   transform:translateY(110%); transition:transform .35s cubic-bezier(.16,1,.3,1); }
 .player.on{ transform:none; }
 .player-scrub{ height:3px; background:var(--line); cursor:pointer; position:relative; touch-action:none; }
+.player-scrub::before{ content:""; position:absolute; inset-inline:0; inset-block:-12px 0; }  /* the bar is 3px: give a finger/cursor more to hit */
 .player-scrub-fill{ position:absolute; inset-block:0; inset-inline-start:0; width:0; background:var(--accent); }
 .player-scrub-thumb{ position:absolute; inset-block-start:50%; inset-inline-start:0;
   width:12px; height:12px; margin-inline-start:-6px; border-radius:50%;
@@ -355,11 +358,18 @@ footer a:hover{ color:var(--paper); }
 #mplayer .mp-exp,#mplayer .mp-col{ display:none; }
 #mplayer.on[data-state="expanded"] .mp-exp{ display:block; }
 #mplayer.on[data-state="collapsed"] .mp-col{ display:block; }
+.mp-scrub{ position:relative; height:4px; background:#1c2834; touch-action:none; cursor:pointer; }
+.mp-scrub::before{ content:""; position:absolute; inset-inline:0; inset-block:0 -12px; }   /* overflow:hidden clips upward, so the hit area grows downward */
+.mp-fill{ position:absolute; top:0; inset-inline-start:0; height:100%; width:0; background:#f2a544; border-radius:2px; }
+#mplayer [data-act]:disabled{ opacity:.3; cursor:default; }
+.pbtn.ok,#mplayer [data-act].ok{ color:var(--verdigris) !important; }
+.mp-lang[aria-pressed="true"]{ border-color:#f2a544 !important; color:#f2a544 !important; }
 #mplayer .ic-play,#mplayer .ic-pause{ display:none; }
 #mplayer:not([data-playing="1"]) .ic-play{ display:block; }
 #mplayer[data-playing="1"] .ic-pause{ display:block; }
 .mspeed-opt.on{ border-color:#f2a544 !important; background:#f2a544 !important; color:#101a24 !important; }
 @media (max-width:680px){
+  body.has-player{ padding-bottom:calc(var(--mp-pad,76px) + 24px); }   /* the mobile player is 100–265px tall, not the desktop bar's 76 */
   .player{ display:none !important; }        /* hide the desktop bar on mobile */
   #mplayer.on{ display:block; position:fixed; inset-inline:0; bottom:0; z-index:30;
     margin-inline:auto; max-width:480px; background:#101a24; color:#eef2f6;
@@ -410,7 +420,8 @@ function stat(name, title){
       <input id="q" type="search" autocomplete="off" spellcheck="false" data-i18n-ph="searchPh" data-i18n-label="searchPh">
       <button type="button" id="qClear" data-i18n-label="clear" hidden>&times;</button>
     </label>
-    <nav class="cats" id="cats" role="group" aria-label="Categories" hidden></nav>
+    <nav class="cats" id="cats" role="group" aria-label="دسته‌بندی" hidden></nav>
+    <nav class="cats subcats" id="subcats" role="group" aria-label="زیرشاخه‌ها" hidden></nav>
   </div>
   <main>
     <div class="continue-wrap" id="continueWrap" hidden>
@@ -457,15 +468,13 @@ function stat(name, title){
 
   <!-- EXPANDED -->
   <div class="mp-exp">
-    <div style="position:relative;height:4px;background:#1c2834">
-      <div class="mp-fill" style="position:absolute;top:0;left:0;height:100%;width:0;background:#f2a544;border-radius:0 2px 2px 0"></div>
-    </div>
+    <div class="mp-scrub"><div class="mp-fill"></div></div>
     <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:5px 12px 8px;position:relative" dir="rtl">
-      <span id="mpDur" style="font-size:11px;color:#5f7182;letter-spacing:.3px;justify-self:end">۰:۰۰</span>
+      <span id="mpCur" style="font-size:11px;color:#5f7182;letter-spacing:.3px;justify-self:end">۰:۰۰</span>
       <button class="mp-act" data-act="collapse" style="justify-self:center;background:none;border:none;color:#8a97a3;padding:6px;cursor:pointer;display:flex" aria-label="جمع کردن پلیر">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </button>
-      <span id="mpCur" style="font-size:11px;color:#5f7182;letter-spacing:.3px;justify-self:start">۰:۰۰</span>
+      <span id="mpDur" style="font-size:11px;color:#5f7182;letter-spacing:.3px;justify-self:start">۰:۰۰</span>
       <button class="mp-act" data-act="close" style="position:absolute;inset-inline-end:6px;top:4px;background:none;border:none;color:#8a97a3;padding:6px;cursor:pointer;display:flex" aria-label="بستن پلیر">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
@@ -488,6 +497,7 @@ function stat(name, title){
           <button class="mp-act" data-act="share" style="background:none;border:none;color:#8a97a3;padding:6px;cursor:pointer;display:flex" aria-label="اشتراک‌گذاری">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"></line></svg>
           </button>
+          <button class="mp-act mp-lang" data-act="lang" aria-pressed="false" aria-label="زبان این کتاب" style="display:flex;align-items:center;justify-content:center;min-width:34px;height:28px;padding:0 8px;border:1.5px solid #3a4956;border-radius:14px;color:#c3ccd4;font-size:12px;font-weight:600;background:none;cursor:pointer">فا</button>
           <div style="position:relative;margin-inline-start:auto;margin-left:56px">
             <button class="mp-act mp-speed" data-act="speed" dir="ltr" style="display:flex;align-items:center;justify-content:center;min-width:40px;height:28px;padding:0 8px;border:1.5px solid #3a4956;border-radius:14px;color:#c3ccd4;font-size:12.5px;font-weight:500;background:none;cursor:pointer">×1</button>
             <div id="mpSpeedMenu" hidden>
@@ -506,19 +516,17 @@ function stat(name, title){
       </div>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 16px 12px" dir="rtl">
-      <button class="mp-act" data-act="next" style="background:none;border:none;color:#8a97a3;padding:8px;cursor:pointer;display:flex" aria-label="اپیزود بعدی"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l10 8-10 8V4z"></path><rect x="17" y="4" width="2" height="16"></rect></svg></button>
-      <button class="mp-act" data-act="fwd" style="background:none;border:none;color:#c3ccd4;padding:6px;cursor:pointer;display:flex;position:relative" aria-label="جلو ۱۵ ثانیه"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1 -3-6.7"></path><polyline points="21 3 21 7 17 7"></polyline></svg><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:2px;font-size:9px;font-weight:800;letter-spacing:-.3px">15</span></button>
-      <button class="mp-act" data-act="toggle" style="width:56px;height:56px;border-radius:50%;background:#f2a544;border:none;color:#101a24;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(242,165,68,.35)" aria-label="پخش/توقف"><svg class="ic-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8V4z"></path></svg><svg class="ic-pause" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg></button>
+      <button class="mp-act" data-act="prev" style="background:none;border:none;color:#8a97a3;padding:8px;cursor:pointer;display:flex" aria-label="اپیزود قبلی"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="transform:scaleX(-1)"><path d="M18 4L8 12l10 8V4z"></path><rect x="5" y="4" width="2" height="16"></rect></svg></button>
       <button class="mp-act" data-act="back" style="background:none;border:none;color:#c3ccd4;padding:6px;cursor:pointer;display:flex;position:relative" aria-label="عقب ۱۵ ثانیه"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"></path><polyline points="3 3 3 7 7 7"></polyline></svg><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:2px;font-size:9px;font-weight:800;letter-spacing:-.3px">15</span></button>
-      <button class="mp-act" data-act="prev" style="background:none;border:none;color:#8a97a3;padding:8px;cursor:pointer;display:flex" aria-label="اپیزود قبلی"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 4L8 12l10 8V4z"></path><rect x="5" y="4" width="2" height="16"></rect></svg></button>
+      <button class="mp-act" data-act="toggle" style="width:56px;height:56px;border-radius:50%;background:#f2a544;border:none;color:#101a24;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 14px rgba(242,165,68,.35)" aria-label="پخش/توقف"><svg class="ic-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8V4z"></path></svg><svg class="ic-pause" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg></button>
+      <button class="mp-act" data-act="fwd" style="background:none;border:none;color:#c3ccd4;padding:6px;cursor:pointer;display:flex;position:relative" aria-label="جلو ۱۵ ثانیه"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1 -3-6.7"></path><polyline points="21 3 21 7 17 7"></polyline></svg><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding-top:2px;font-size:9px;font-weight:800;letter-spacing:-.3px">15</span></button>
+      <button class="mp-act" data-act="next" style="background:none;border:none;color:#8a97a3;padding:8px;cursor:pointer;display:flex" aria-label="اپیزود بعدی"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="transform:scaleX(-1)"><path d="M6 4l10 8-10 8V4z"></path><rect x="17" y="4" width="2" height="16"></rect></svg></button>
     </div>
   </div>
 
   <!-- COLLAPSED -->
   <div class="mp-col">
-    <div style="position:relative;height:4px;background:#1c2834">
-      <div class="mp-fill" style="position:absolute;top:0;left:0;height:100%;width:0;background:#f2a544;border-radius:0 2px 2px 0"></div>
-    </div>
+    <div class="mp-scrub"><div class="mp-fill"></div></div>
     <div style="display:flex;justify-content:center;padding-top:2px">
       <button class="mp-act" data-act="expand" style="background:none;border:none;color:#8a97a3;padding:6px;cursor:pointer;display:flex" aria-label="باز کردن پلیر"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"></polyline></svg></button>
     </div>
@@ -671,7 +679,12 @@ const publishedLabel = (iso, lang)=>{
     ? d.toLocaleDateString("fa-IR-u-ca-persian", {year:"numeric", month:"long", day:"numeric", timeZone:"UTC"})
     : d.toLocaleDateString("en-GB", {year:"numeric", month:"short", day:"numeric", timeZone:"UTC"});
 };
-const cleanCoverPath = raw => String(raw ?? "").trim().replace(/^['"]+|['"]+$/g, "").trim();
+const cleanCoverPath = raw => {
+  const p = String(raw ?? "").trim().replace(/^['"]+|['"]+$/g, "").trim();
+  // A bare filename ("Learning-Domain-Driven-Design.jpg") means a file in covers/ — two
+  // published books carried one and showed no cover on the card or the player.
+  return p && !p.includes("/") && !p.includes(":") ? "covers/" + p : p;
+};
 const langKey = lang => lang==="fa" ? "Persian" : "English";
 /* Whole megabytes: the number exists to set expectations before a long download,
    and a decimal implies a precision nobody acts on. */
@@ -685,7 +698,23 @@ function chTitle(slug, ep, lang){
   return ep.title;
 }
 const bookCats = slug => (META[slug] && META[slug].categories) || [];
-let CAT = null;   // active category filter
+/* categories.json: groups → subgenres (id, en, fa). A book stores subgenre ids; the
+   group is derived. An id the file doesn't know (stale meta) is shown as typed and
+   belongs to no group, so it can never break the page. */
+let TAX = { groups: [] };
+let SUBIDX = new Map();
+const setTaxonomy = tax => {
+  TAX = (tax && tax.groups) ? tax : { groups: [] };
+  SUBIDX = new Map(TAX.groups.flatMap(g => g.subs.map(s => [s.id, { ...s, group: g.id }])));
+};
+const catName  = (id, lang) => { const s = SUBIDX.get(id); return s ? (lang==="en" ? s.en : s.fa) : id; };
+const catGroup = id => (SUBIDX.get(id) || {}).group;
+/* A book matches when one of its subgenres is in the chosen group (and is the chosen
+   subgenre, if one is picked). No group chosen → everything matches. */
+const matchesCat = (cats, group, sub) =>
+  !group || cats.some(id => catGroup(id)===group && (!sub || id===sub));
+let CAT_GROUP = null;   // active group filter (id)
+let CAT = null;         // active subgenre filter (id), only ever inside CAT_GROUP
 let Q = "";       // active search query (normalised)
 
 /* Persian needs folding or the box quietly fails: "خلاصه‌های" is written with a
@@ -702,7 +731,7 @@ function matchBook(b){
   if(!Q) return { hit:true, viaChapter:false };
   const m = META[b.slug] || {};
   const head = [m.title_en, m.title_fa, b.title, m.author, m.note_en, m.note_fa,
-                ...bookCats(b.slug)];
+                ...bookCats(b.slug).flatMap(id => [catName(id,"fa"), catName(id,"en")])];
   if(head.some(v => norm(v).includes(Q))) return { hit:true, viaChapter:false };
   // Both languages, always — there's no site-wide language for search to follow,
   // and a book currently showing Persian chapters must still be found by an
@@ -842,7 +871,7 @@ function render(){
   $("#stats").hidden=false; $("#msg").hidden=true;
 
   renderCats(books);
-  const byCat = CAT ? books.filter(b=>bookCats(b.slug).includes(CAT)) : books;
+  const byCat = books.filter(b=>matchesCat(bookCats(b.slug), CAT_GROUP, CAT));
   const hits = byCat.map(b=>[b, matchBook(b)]).filter(([,m])=>m);
 
   const open = new Set($$(".toc-toggle[aria-expanded='true']").map(b=>b.dataset.slug));
@@ -862,20 +891,30 @@ function render(){
 }
 
 function renderCats(books){
-  const all = [...new Set(books.flatMap(b=>bookCats(b.slug)))].sort((a,b)=>a.localeCompare(b));
-  const nav = $("#cats");
-  if(!all.length){ nav.hidden=true; nav.innerHTML=""; return; }
+  const used = new Set(books.flatMap(b=>bookCats(b.slug)));
+  const groups = TAX.groups.filter(g=>g.subs.some(x=>used.has(x.id)));
+  const nav = $("#cats"), sub = $("#subcats");
+  if(!groups.length){ nav.hidden=true; nav.innerHTML=""; sub.hidden=true; sub.innerHTML=""; return; }
   nav.hidden=false;
-  const chip = (label,val,on)=>{
+  const chip = (label,on,fn)=>{
     const b=document.createElement("button");
     b.type="button"; b.className="cat"; b.textContent=label;
     b.setAttribute("aria-pressed",String(on));
-    b.addEventListener("click",()=>{ CAT = (CAT===val)?null:val; render(); });
+    b.addEventListener("click",fn);
     return b;
   };
   nav.innerHTML="";
-  nav.append(chip(t().all,null,CAT===null));
-  all.forEach(c=>nav.append(chip(c,c,CAT===c)));
+  nav.append(chip(t().all, CAT_GROUP===null, ()=>{ CAT_GROUP=null; CAT=null; render(); }));
+  groups.forEach(g=>nav.append(chip(g.fa, CAT_GROUP===g.id,
+    ()=>{ CAT = null; CAT_GROUP = (CAT_GROUP===g.id) ? null : g.id; render(); })));
+
+  // second row: the chosen group's subgenres that some book actually has
+  const open = groups.find(g=>g.id===CAT_GROUP);
+  sub.innerHTML="";
+  if(!open){ sub.hidden=true; return; }
+  sub.hidden=false;
+  open.subs.filter(x=>used.has(x.id)).forEach(x=>sub.append(
+    chip(x.fa, CAT===x.id, ()=>{ CAT = (CAT===x.id) ? null : x.id; render(); })));
 }
 
 function bookEl(b, openToc){
@@ -951,9 +990,12 @@ function bookEl(b, openToc){
   if(cats.length){
     cats.forEach(c=>{
       const cb=document.createElement("button");
-      cb.type="button"; cb.className="cat"; cb.textContent=c;
+      cb.type="button"; cb.className="cat"; cb.textContent=catName(c, bLang);
       cb.setAttribute("aria-pressed",String(CAT===c));
-      cb.addEventListener("click",()=>{ CAT=(CAT===c)?null:c; render(); scrollTo({top:0,behavior:"smooth"}); });
+      cb.addEventListener("click",()=>{
+        if(CAT===c){ CAT=null; CAT_GROUP=null; }
+        else { CAT=c; CAT_GROUP=catGroup(c)||null; }
+        render(); scrollTo({top:0,behavior:"smooth"}); });
       catBox.append(cb);
     });
   } else catBox.remove();
@@ -1073,7 +1115,7 @@ function mkTrack(b,kind,ep,idx,lang){
 
 /* ---------------- playback ---------------- */
 const cur = ()=>queue[qi];
-function start(list,i,autoplay=true){ queue=list; qi=i; load(autoplay); }
+function start(list,i,autoplay=true){ queue=list; qi=i; load(autoplay, true); }
 
 /* ---------------- deep links ----------------
    #<slug>                        → a book
@@ -1117,18 +1159,31 @@ function openFromHash(){
   if(i >= 0){ R.expand(); start(R.tracks, i, false); }
 }
 addEventListener("hashchange", openFromHash);
-function load(autoplay){
+function load(autoplay, userStarted=false){
   const tr=cur(); if(!tr) return;
+  const mWasOn = mp.classList.contains("on");
   audio.src=tr.src;
   $("#pTitle").textContent=tr.label; $("#pTitle").classList.remove("err");
   $("#pSub").textContent=tr.book;
   $("#player").classList.add("on"); document.body.classList.add("has-player");
   mpSetTrack(tr); mp.classList.add("on");
-  if(autoplay && mIsMobile()) mExpand();            // open expanded when they play something
-  $("#prev").disabled = qi<=0;
-  $("#next").disabled = qi>=queue.length-1;
-  $("#plang").textContent = tr.lang==="en" ? "EN" : "فا";
-  $("#plang").setAttribute("aria-pressed", tr.lang==="en" ? "true" : "false");
+  // Expanded when they pick something to play. Not on auto-advance or prev/next (that
+  // would pop the sheet open over whatever they are reading), and a restored session
+  // or shared link that is not playing starts as the small bar, not a 265px sheet.
+  if(mIsMobile()){
+    if(autoplay && userStarted) mExpand();
+    else if(!autoplay && !mWasOn) mCollapse();
+  }
+  const atStart = qi<=0, atEnd = qi>=queue.length-1;
+  $("#prev").disabled = atStart;
+  $("#next").disabled = atEnd;
+  $$('#mplayer [data-act="prev"]').forEach(b=>b.disabled = atStart);
+  $$('#mplayer [data-act="next"]').forEach(b=>b.disabled = atEnd);
+  const langLabel = tr.lang==="en" ? "EN" : "فا", langOn = tr.lang==="en" ? "true" : "false";
+  $("#plang").textContent = langLabel;
+  $("#plang").setAttribute("aria-pressed", langOn);
+  $$(".mp-lang").forEach(b=>{ b.textContent=langLabel; b.setAttribute("aria-pressed", langOn); });
+  syncPlayerPad();
   const histEntry=HISTORY[tr.src];
   if(shouldResume(histEntry)){
     audio.addEventListener("loadedmetadata",()=>{ audio.currentTime=histEntry.position; },{once:true});
@@ -1141,7 +1196,9 @@ function load(autoplay){
    file is perfectly fine there; the player just stays paused until it is clicked. */
 function fail(err){
   if(err && err.name==="NotAllowedError") return;
-  $("#pTitle").textContent=t().notfound; $("#pTitle").classList.add("err"); paintSpines();
+  $("#pTitle").textContent=t().notfound; $("#pTitle").classList.add("err");
+  $("#mpChap").textContent=t().notfound;           // the mobile player has no #pTitle
+  paintSpines();
 }
 function paintSpines(){
   const tr=cur();
@@ -1222,7 +1279,7 @@ $("#plang").addEventListener("click",()=>{
 });
 
 /* 15s skip */
-$("#pShare").addEventListener("click",mShare);
+$("#pShare").addEventListener("click",e=>mShare(e.currentTarget));
 $("#pDl").addEventListener("click",mDownload);
 $("#back15").addEventListener("click",()=>{ audio.currentTime=Math.max(0,(audio.currentTime||0)-15); });
 $("#fwd15").addEventListener("click",()=>{ if(audio.duration) audio.currentTime=Math.min(audio.duration,audio.currentTime+15); });
@@ -1241,8 +1298,11 @@ $("#speed").addEventListener("click",()=>setRate(SPEEDS[(SPEEDS.indexOf(RATE)+1)
 audio.addEventListener("loadedmetadata",applyRate);   // browsers reset rate on new src → reassert
 applyRate();                                          // set labels + rate at boot
 $("#close").addEventListener("click",stopPlayer);
-function scrubRatio(clientX){
-  const r=$("#scrub").getBoundingClientRect();
+/* One seek implementation for every progress bar — the desktop bar and both mobile
+   ones. The timeline runs the way the page does (right→left in Persian), so a tap
+   at the right edge is the start. */
+function scrubRatio(el, clientX){
+  const r=el.getBoundingClientRect();
   const x = document.dir==="rtl" ? r.right-clientX : clientX-r.left;
   return Math.min(Math.max(x/r.width,0),1);
 }
@@ -1252,25 +1312,37 @@ function seekTo(ratio){
   $("#scrubFill").style.width=(ratio*100)+"%";
   $("#scrubThumb").style.insetInlineStart=(ratio*100)+"%";
   $("#scrub").setAttribute("aria-valuenow",String(Math.round(ratio*100)));
+  $$(".mp-fill").forEach(f=>f.style.width=(ratio*100)+"%");
 }
-let scrubbing=false;
-$("#scrub").addEventListener("pointerdown",e=>{
-  if(!audio.duration) return;
-  scrubbing=true; e.currentTarget.setPointerCapture(e.pointerId);
-  seekTo(scrubRatio(e.clientX));
-});
-$("#scrub").addEventListener("pointermove",e=>{ if(scrubbing) seekTo(scrubRatio(e.clientX)); });
-$("#scrub").addEventListener("pointerup",()=>{ scrubbing=false; });
-$("#scrub").addEventListener("pointercancel",()=>{ scrubbing=false; });
+function bindScrub(el){
+  let dragging=false;
+  el.addEventListener("pointerdown",e=>{
+    if(!audio.duration) return;
+    dragging=true; el.setPointerCapture(e.pointerId);
+    seekTo(scrubRatio(el, e.clientX));
+  });
+  el.addEventListener("pointermove",e=>{ if(dragging) seekTo(scrubRatio(el, e.clientX)); });
+  el.addEventListener("pointerup",()=>{ dragging=false; });
+  el.addEventListener("pointercancel",()=>{ dragging=false; });
+}
+bindScrub($("#scrub"));
+$$(".mp-scrub").forEach(bindScrub);
 $("#scrub").addEventListener("keydown",e=>{
   if(!audio.duration) return;
-  if(e.key==="ArrowRight") audio.currentTime=Math.min(audio.duration,audio.currentTime+5);
-  else if(e.key==="ArrowLeft") audio.currentTime=Math.max(0,audio.currentTime-5);
+  // Arrow keys follow the visual direction: forward is leftward when the bar runs right→left.
+  const fwd = document.dir==="rtl" ? "ArrowLeft" : "ArrowRight";
+  const back = document.dir==="rtl" ? "ArrowRight" : "ArrowLeft";
+  if(e.key===fwd) audio.currentTime=Math.min(audio.duration,audio.currentTime+5);
+  else if(e.key===back) audio.currentTime=Math.max(0,audio.currentTime-5);
   else return;
   e.preventDefault();
 });
 document.addEventListener("keydown",e=>{
-  if(e.code==="Space" && cur() && !/^(BUTTON|A|INPUT)$/.test(document.activeElement.tagName)){
+  // Never steal Space from somewhere text is typed — the suggestion form's textarea
+  // used to lose every space while an episode was loaded.
+  const a=document.activeElement;
+  const typing = a && (/^(TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable);
+  if(e.code==="Space" && cur() && !typing && !dlg.open && !/^(BUTTON|A|INPUT)$/.test(a.tagName)){
     e.preventDefault(); audio.paused?audio.play().catch(fail):audio.pause();
   }
 });
@@ -1497,14 +1569,23 @@ sForm.addEventListener("submit",async e=>{
 const mp=$("#mplayer");
 const mIsMobile=()=>matchMedia("(max-width:680px)").matches;
 let mExpandedAt=0;
-function mExpand(){ mp.dataset.state="expanded"; mExpandedAt=Date.now(); }
-function mCollapse(){ mp.dataset.state="collapsed"; }
+function mExpand(){ mp.dataset.state="expanded"; mExpandedAt=Date.now(); syncPlayerPad(); }
+/* Room under the page for the mobile player at its current height, so the last book
+   and the footer can scroll clear of it. CSS reads --mp-pad (mobile only). */
+function syncPlayerPad(){
+  const h = mp.classList.contains("on") ? Math.ceil(mp.getBoundingClientRect().height) : 0;
+  document.documentElement.style.setProperty("--mp-pad", (h||76)+"px");
+}
+if(window.ResizeObserver) new ResizeObserver(syncPlayerPad).observe(mp);
+function mCollapse(){ mp.dataset.state="collapsed"; syncPlayerPad(); }
 function faDigits(s){ return s.replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[+d]); }
 function stopPlayer(){
+  forceRecordProgress(false);   // before the queue is cleared: the pause event fires too late to know the track
   audio.pause(); audio.removeAttribute("src"); queue=[]; qi=-1;
   $("#player").classList.remove("on"); document.body.classList.remove("has-player");
   mp.classList.remove("on");
   paintSpines();
+  syncPlayerPad();
 }
 function mpSetTrack(tr){
   $$(".mp-title").forEach(e=>e.textContent=tr.label);   // collapsed mini bar (chapter label)
@@ -1516,13 +1597,23 @@ function mpSetTrack(tr){
     : ph;
 }
 function mDownload(){ const tr=cur(); if(!tr) return; const a=document.createElement("a"); a.href=tr.src; a.download=""; document.body.appendChild(a); a.click(); a.remove(); }
-async function mShare(){
+/* Brief "it worked" colour on a player button (the clipboard copy has no other sign). */
+function flash(btn){
+  if(!btn) return;
+  btn.classList.add("ok");
+  setTimeout(()=>btn.classList.remove("ok"),1400);
+}
+async function mShare(btn){
   const tr=cur(); if(!tr) return;
   const url=trackLink(tr);          // links to this episode, not just the site
   try{
-    if(navigator.share) await navigator.share({title:tr.label,text:tr.book,url});
-    else if(navigator.clipboard) await navigator.clipboard.writeText(url);
-  }catch{}
+    if(navigator.share){ await navigator.share({title:tr.label,text:tr.book,url}); return; }
+    await navigator.clipboard.writeText(url);
+    flash(btn);
+  }catch(err){
+    if(err && err.name==="AbortError") return;      // they closed the share sheet
+    prompt(t().copyLink, url);                      // clipboard refused: a selectable copy, as copyLink() does
+  }
 }
 mp.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]"); if(!b) return;
@@ -1536,7 +1627,8 @@ mp.addEventListener("click",e=>{
     case "expand": mExpand(); break;
     case "collapse": mCollapse(); break;
     case "download": mDownload(); break;
-    case "share":  mShare(); break;
+    case "share":  mShare(b); break;
+    case "lang":   { const tr=cur(); if(tr) switchBookLang(tr.slug, tr.lang==="en" ? "fa" : "en"); break; }
     case "speed":  $("#mpSpeedMenu").hidden=!$("#mpSpeedMenu").hidden; break;
     case "speedclose": $("#mpSpeedMenu").hidden=true; break;
     case "setspeed": setRate(parseFloat(b.dataset.rate)); $("#mpSpeedMenu").hidden=true; break;
@@ -1548,15 +1640,17 @@ function maybeCollapse(){
      && mIsMobile() && Date.now()-mExpandedAt>400) mCollapse();
 }
 addEventListener("scroll",maybeCollapse,{passive:true});
-addEventListener("touchmove",maybeCollapse,{passive:true});
+// a drag that starts on the player itself (scrubbing) must not fold it away mid-gesture
+addEventListener("touchmove",e=>{ if(!e.target.closest || !e.target.closest("#mplayer")) maybeCollapse(); },{passive:true});
 document.addEventListener("click",e=>{ if(!e.target.closest("#mplayer")) maybeCollapse(); });
 
 /* boot — manifest is required (generated); books.meta.json is optional (hand-edited) */
 Promise.all([
   fetch("manifest.json?"+Date.now()).then(r=>{ if(!r.ok) throw 0; return r.json(); }),
   fetch("books.meta.json?"+Date.now()).then(r=>r.ok?r.json():{}).catch(()=>({})),
+  fetch("categories.json?"+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null),
 ])
-  .then(([d,meta])=>{ DATA=d; META=meta||{}; render(); openFromHash(); loadVotes(); })
+  .then(([d,meta,tax])=>{ DATA=d; META=meta||{}; setTaxonomy(tax); render(); openFromHash(); loadVotes(); })
   .catch(()=>{ render(); const m=$("#msg"); m.hidden=false; m.textContent=t().error; });
 </script>
 </body>
