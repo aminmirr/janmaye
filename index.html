@@ -1115,6 +1115,51 @@ function mkTrack(b,kind,ep,idx,lang){
 
 /* ---------------- playback ---------------- */
 const cur = ()=>queue[qi];
+
+/* ---------------- lock-screen / headset controls (Media Session) ----------------
+   What the phone's lock screen, notification shade, car display and headphone buttons
+   show and call. Everything routes to the same actions the on-page buttons use. */
+const MS = ("mediaSession" in navigator) ? navigator.mediaSession : null;
+// setActionHandler throws for an action a browser doesn't know — never let that break playback
+function msHandler(action, fn){ try{ MS.setActionHandler(action, fn); }catch{} }
+if(MS){
+  msHandler("play",  ()=>{ audio.play().catch(fail); });
+  msHandler("pause", ()=>{ audio.pause(); });
+  msHandler("seekbackward", d=>{ audio.currentTime=Math.max(0,(audio.currentTime||0)-((d&&d.seekOffset)||15)); });
+  msHandler("seekforward",  d=>{ if(audio.duration) audio.currentTime=Math.min(audio.duration,(audio.currentTime||0)+((d&&d.seekOffset)||15)); });
+  msHandler("seekto", d=>{ if(audio.duration && d && d.seekTime!=null) audio.currentTime=Math.min(Math.max(0,d.seekTime),audio.duration); });
+  msHandler("stop",  ()=>stopPlayer());
+}
+/* The track changed: title, book, author, cover — and which of previous/next exist
+   (a null handler removes the button instead of leaving a dead one). */
+function msTrack(tr){
+  if(!MS) return;
+  const m=META[tr.slug]||{}, cov=cleanCoverPath(m.cover);
+  try{
+    MS.metadata = new MediaMetadata({ title:tr.label, artist:m.author||"", album:tr.book,
+      artwork: cov ? [{ src:new URL(cov, location.href).href }] : [] });
+  }catch{}
+  msHandler("previoustrack", qi>0 ? ()=>{ qi--; load(true); } : null);
+  msHandler("nexttrack", qi<queue.length-1 ? ()=>{ qi++; load(true); } : null);
+}
+/* The OS draws its own progress bar from this and interpolates between calls, so it
+   is only needed when something changes (new media, seek, speed, play/pause). */
+function msPosition(){
+  if(!MS || !MS.setPositionState || !isFinite(audio.duration) || !audio.duration) return;
+  try{ MS.setPositionState({ duration:audio.duration, playbackRate:audio.playbackRate||1,
+                             position:Math.min(audio.currentTime||0, audio.duration) }); }catch{}
+}
+function msState(){
+  if(MS) MS.playbackState = !cur() ? "none" : audio.paused ? "paused" : "playing";
+}
+function msClear(){
+  if(!MS) return;
+  try{ MS.metadata = null; }catch{}
+  MS.playbackState = "none";
+}
+['loadedmetadata','seeked','ratechange','play','pause'].forEach(ev=>audio.addEventListener(ev,msPosition));
+/* ---------------- end media session ---------------- */
+
 function start(list,i,autoplay=true){ queue=list; qi=i; load(autoplay, true); }
 
 /* ---------------- deep links ----------------
@@ -1166,7 +1211,7 @@ function load(autoplay, userStarted=false){
   $("#pTitle").textContent=tr.label; $("#pTitle").classList.remove("err");
   $("#pSub").textContent=tr.book;
   $("#player").classList.add("on"); document.body.classList.add("has-player");
-  mpSetTrack(tr); mp.classList.add("on");
+  mpSetTrack(tr); msTrack(tr); mp.classList.add("on");
   // Expanded when they pick something to play. Not on auto-advance or prev/next (that
   // would pop the sheet open over whatever they are reading), and a restored session
   // or shared link that is not playing starts as the small bar, not a 265px sheet.
@@ -1218,6 +1263,7 @@ function paintSpines(){
   $("#toggle").innerHTML = on?ICON_PAUSE:ICON_PLAY;
   $("#toggle").setAttribute("aria-label", on?t().pause:t().play);
   mp.dataset.playing = on?"1":"0";
+  msState();
 }
 
 audio.addEventListener("play",paintSpines);
@@ -1585,6 +1631,7 @@ function stopPlayer(){
   $("#player").classList.remove("on"); document.body.classList.remove("has-player");
   mp.classList.remove("on");
   paintSpines();
+  msClear();
   syncPlayerPad();
 }
 function mpSetTrack(tr){

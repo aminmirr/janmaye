@@ -164,7 +164,11 @@ The publish prompt asks for those.
   anonymous Supabase form).
 - **Mobile player** (≤680px): a custom expanded/collapsed player that opens expanded
   when you play something and auto-collapses when you scroll or interact elsewhere.
-  Desktop keeps the compact bottom bar. Both have 15s skip + playback speed.
+  Desktop keeps the compact bottom bar. Both have 15s skip, playback speed, a seekable
+  progress bar and the per-book language toggle.
+- **Lock-screen / headset controls** (Media Session API): title, author and cover on the
+  lock screen and notification shade, with play/pause, ±15 s, previous/next and a
+  scrubbable position bar. Previous/next disappear at the ends of a book.
 
 ## Likes & suggestions (Supabase)
 
