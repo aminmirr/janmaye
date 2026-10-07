@@ -95,6 +95,7 @@ html[data-lang="fa"] .no-fa span{ font-family:'Vazirmatn',sans-serif; font-weigh
   text-transform:none; letter-spacing:0; font-size:.52rem; max-width:46px; }
 .book-author{ color:var(--haze); margin-top:10px; font-size:.9rem; }
 .book-author::before{ content:"—  "; opacity:.6; }
+.book-date{ color:var(--haze); margin-top:4px; font-size:.8rem; opacity:.8; }
 
 /* per-book language — which of that book's two audio languages you're
    browsing/listening to. Small and scoped, unlike the old site-wide toggle. */
@@ -659,6 +660,17 @@ const esc = s => String(s??"").replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">
    of the value — e.g. "'covers/x.jpg'" instead of "covers/x.jpg". Trim/strip/trim
    so an accidental wrap in ' or " (or both, or with stray whitespace either side)
    still resolves, instead of silently 404ing as a literal quote in the URL. */
+/* Newest first; a book with no date sinks below the dated ones. Sorted here as well as
+   in build_site.py so a hand-edited manifest still reads in the right order. */
+const byNewest = (a,b)=> String(b.published_at||"").localeCompare(String(a.published_at||""));
+/* "۱۴ مرداد ۱۴۰۵" in fa, "4 Oct 2026" in en; "" when the date is missing or unreadable. */
+const publishedLabel = (iso, lang)=>{
+  const d = new Date(iso);
+  if(!iso || isNaN(d)) return "";
+  return lang==="fa"
+    ? d.toLocaleDateString("fa-IR-u-ca-persian", {year:"numeric", month:"long", day:"numeric", timeZone:"UTC"})
+    : d.toLocaleDateString("en-GB", {year:"numeric", month:"short", day:"numeric", timeZone:"UTC"});
+};
 const cleanCoverPath = raw => String(raw ?? "").trim().replace(/^['"]+|['"]+$/g, "").trim();
 const langKey = lang => lang==="fa" ? "Persian" : "English";
 /* Whole megabytes: the number exists to set expectations before a long download,
@@ -812,7 +824,7 @@ function render(){
   $("#headline").innerHTML=L.headline;
   if(!DATA) return;
 
-  const books=DATA.books||[];
+  const books=[...(DATA.books||[])].sort(byNewest);
   if(!books.length){ $("#msg").textContent=L.empty; return; }
 
   let eps=0, listen=0;
@@ -880,6 +892,7 @@ function bookEl(b, openToc){
   const cover   = cleanCoverPath(m.cover);
   const note    = (bLang==="fa" ? m.note_fa : m.note_en) || "";
   const noFa    = m.translated_fa === false;
+  const published = publishedLabel(b.published_at, bLang);
 
   el.innerHTML=`
     <div class="book-top">
@@ -889,6 +902,7 @@ function bookEl(b, openToc){
           <h2 class="book-title-en">${esc(titleEn)}${noFa?` <span class="no-fa"><span>بدون ترجمه‌ی<br>رسمی فارسی</span></span>`:""}</h2>
           ${titleFa?`<p class="book-title-fa">${esc(titleFa)}</p>`:""}
           ${author?`<p class="book-author">${esc(author)}</p>`:""}
+          ${published?`<p class="book-date">${esc(published)}</p>`:""}
           <div class="book-lang" role="group" aria-label="زبان این کتاب">
             <button type="button" data-book-lang="fa" aria-pressed="${bLang==="fa"}">فارسی</button>
             <button type="button" data-book-lang="en" aria-pressed="${bLang==="en"}">English</button>

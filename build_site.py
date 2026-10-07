@@ -29,6 +29,7 @@ import subprocess
 import sys
 import tempfile
 import zipfile
+from datetime import datetime, timezone
 from pathlib import Path
 
 BOOKS_ROOT = Path.home() / "Downloads" / "notebookLM"
@@ -229,6 +230,21 @@ def to_upload(paths: list[Path], have: dict[str, int],
     if force:
         return list(paths)
     return [p for p in paths if have.get(p.name) != p.stat().st_size]
+
+
+def stamp_published(fresh: dict, existing: dict, now: str | None = None) -> None:
+    """Give each freshly published entry its `published_at`: the date it FIRST went
+    up. A re-publish or top-up keeps the original — it is when the book appeared on
+    the site, not when it was last touched. Mutates `fresh`."""
+    now = now or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    for slug, entry in fresh.items():
+        entry["published_at"] = (existing.get(slug) or {}).get("published_at") or now
+
+
+def sort_books(books) -> list:
+    """Newest first; a book with no date sinks below the dated ones, then by title."""
+    by_title = sorted(books, key=lambda b: b["title"])
+    return sorted(by_title, key=lambda b: b.get("published_at") or "", reverse=True)
 
 
 def publish_book(book_name: str, repo: str, do_shrink: bool = True,
@@ -638,8 +654,9 @@ def main() -> None:
     manifest = load_manifest()
     by_slug = {b["slug"]: b for b in manifest["books"]}
     clobbered = [s for s in published if s in by_slug]
+    stamp_published(published, by_slug)
     by_slug.update(published)
-    manifest["books"] = sorted(by_slug.values(), key=lambda b: b["title"])
+    manifest["books"] = sort_books(by_slug.values())
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     print(f"wrote {MANIFEST} ({len(manifest['books'])} book(s), "
           f"{len(published)} updated, {len(published) - len(clobbered)} new)")
