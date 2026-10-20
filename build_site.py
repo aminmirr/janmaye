@@ -55,6 +55,8 @@ _GH_ACCOUNT = "aminmirr"
 
 
 def _gh_env() -> dict:
+    if os.environ.get("GH_TOKEN"):
+        return os.environ.copy()     # a runner: the token is given, there is no gh login to ask
     env = os.environ.copy()
     try:
         token = subprocess.run(["gh", "auth", "token", "-u", _GH_ACCOUNT],
