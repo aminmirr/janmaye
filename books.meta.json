@@ -1199,5 +1199,39 @@
         "title_fa": ""
       }
     }
+  },
+  "the-power-of-moments-why-certain-experiences-have-extraordin": {
+    "title_en": "The Power of Moments",
+    "title_fa": "قدرت لحظات",
+    "author": "Dan Heath",
+    "cover": "covers/the-power-of-moments-why-certain-experiences-have-extraordin-cover.jpg",
+    "note_en": "",
+    "note_fa": "",
+    "translated_fa": null,
+    "categories": [
+      "life-design"
+    ],
+    "chapters": {
+      "00-introduction": {
+        "title_en": "introduction",
+        "title_fa": ""
+      },
+      "01-elevation": {
+        "title_en": "elevation",
+        "title_fa": ""
+      },
+      "02-insight": {
+        "title_en": "insight",
+        "title_fa": ""
+      },
+      "03-pride": {
+        "title_en": "pride",
+        "title_fa": ""
+      },
+      "04-connection": {
+        "title_en": "connection",
+        "title_fa": ""
+      }
+    }
   }
 }

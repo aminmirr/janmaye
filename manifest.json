@@ -1,6 +1,89 @@
 {
   "books": [
     {
+      "slug": "the-power-of-moments-why-certain-experiences-have-extraordin",
+      "title": "The power of moments why certain experiences have extraordin",
+      "episodes": {
+        "English": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/whole_book_en.m4a",
+            "seconds": 1128
+          },
+          {
+            "title": "introduction",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/00-introduction_en.m4a",
+            "seconds": 1010
+          },
+          {
+            "title": "elevation",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/01-elevation_en.m4a",
+            "seconds": 1254
+          },
+          {
+            "title": "insight",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/02-insight_en.m4a",
+            "seconds": 1098
+          },
+          {
+            "title": "pride",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/03-pride_en.m4a",
+            "seconds": 1222
+          },
+          {
+            "title": "connection",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/04-connection_en.m4a",
+            "seconds": 1209
+          }
+        ],
+        "Persian": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/whole_book_fa.m4a",
+            "seconds": 794
+          },
+          {
+            "title": "introduction",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/00-introduction_fa.m4a",
+            "seconds": 1056
+          },
+          {
+            "title": "elevation",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/01-elevation_fa.m4a",
+            "seconds": 1386
+          },
+          {
+            "title": "insight",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/02-insight_fa.m4a",
+            "seconds": 1116
+          },
+          {
+            "title": "pride",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/03-pride_fa.m4a",
+            "seconds": 763
+          },
+          {
+            "title": "connection",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/04-connection_fa.m4a",
+            "seconds": 1257
+          }
+        ]
+      },
+      "zips": {
+        "English": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/the-power-of-moments-why-certain-experiences-have-extraordin-en.zip",
+          "bytes": 58237651,
+          "count": 6
+        },
+        "Persian": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-the-power-of-moments-why-certain-experiences-have-extraordin/the-power-of-moments-why-certain-experiences-have-extraordin-fa.zip",
+          "bytes": 53754645,
+          "count": 6
+        }
+      },
+      "published_at": "2026-10-25T12:25:31Z"
+    },
+    {
       "slug": "learningdomain-drivendesign",
       "title": "LearningDomain DrivenDesign",
       "episodes": {
