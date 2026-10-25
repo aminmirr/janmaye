@@ -84,6 +84,195 @@
       "published_at": "2026-10-25T12:25:31Z"
     },
     {
+      "slug": "how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda",
+      "title": "How Not to Be Wrong The Power of Mathematical Thinking Jorda",
+      "episodes": {
+        "English": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/whole_book_en.m4a",
+            "seconds": 1410
+          },
+          {
+            "title": "WHEN AM I GOING TO USE THIS",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/00-WHEN-AM-I-GOING-TO-USE-THIS_en.m4a",
+            "seconds": 1461
+          },
+          {
+            "title": "PART I Linearity",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/01-PART-I-Linearity_en.m4a",
+            "seconds": 1493
+          },
+          {
+            "title": "PART II Inference",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/02-PART-II-Inference_en.m4a",
+            "seconds": 1608
+          },
+          {
+            "title": "PART III Expectation",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/03-PART-III-Expectation_en.m4a",
+            "seconds": 1800
+          },
+          {
+            "title": "PART IV Regression",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/04-PART-IV-Regression_en.m4a",
+            "seconds": 881
+          },
+          {
+            "title": "PART V Existence",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/05-PART-V-Existence_en.m4a",
+            "seconds": 820
+          },
+          {
+            "title": "HOW TO BE RIGHT",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/06-HOW-TO-BE-RIGHT_en.m4a",
+            "seconds": 1406
+          }
+        ],
+        "Persian": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/whole_book_fa.m4a",
+            "seconds": 1435
+          },
+          {
+            "title": "WHEN AM I GOING TO USE THIS",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/00-WHEN-AM-I-GOING-TO-USE-THIS_fa.m4a",
+            "seconds": 835
+          },
+          {
+            "title": "PART I Linearity",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/01-PART-I-Linearity_fa.m4a",
+            "seconds": 1358
+          },
+          {
+            "title": "PART II Inference",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/02-PART-II-Inference_fa.m4a",
+            "seconds": 1105
+          },
+          {
+            "title": "PART III Expectation",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/03-PART-III-Expectation_fa.m4a",
+            "seconds": 877
+          },
+          {
+            "title": "PART IV Regression",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/04-PART-IV-Regression_fa.m4a",
+            "seconds": 798
+          },
+          {
+            "title": "PART V Existence",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/05-PART-V-Existence_fa.m4a",
+            "seconds": 829
+          },
+          {
+            "title": "HOW TO BE RIGHT",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/06-HOW-TO-BE-RIGHT_fa.m4a",
+            "seconds": 1084
+          }
+        ]
+      },
+      "zips": {
+        "English": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda-en.zip",
+          "bytes": 91207421,
+          "count": 8
+        },
+        "Persian": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda/how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda-fa.zip",
+          "bytes": 69762202,
+          "count": 8
+        }
+      },
+      "published_at": "2026-10-19T05:39:13Z"
+    },
+    {
+      "slug": "fundamentals-of-software-engineering-from-coder-to-engineer",
+      "title": "Fundamentals of Software Engineering From Coder to Engineer ",
+      "episodes": {
+        "Persian": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/whole_book_fa.m4a",
+            "seconds": 1467
+          },
+          {
+            "title": "Programmer to Engineer",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/00-Programmer-to-Engineer_fa.m4a",
+            "seconds": 1046
+          },
+          {
+            "title": "Writing Code",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/01-Writing-Code_fa.m4a",
+            "seconds": 1169
+          },
+          {
+            "title": "Modeling",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/02-Modeling_fa.m4a",
+            "seconds": 1293
+          },
+          {
+            "title": "Automated Testing",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/03-Automated-Testing_fa.m4a",
+            "seconds": 1463
+          },
+          {
+            "title": "Exploring and Modifying Unfamiliar Systems",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/04-Exploring-and-Modifying-Unfamiliar-Systems_fa.m4a",
+            "seconds": 926
+          },
+          {
+            "title": "User Interface Design",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/05-User-Interface-Design_fa.m4a",
+            "seconds": 1482
+          },
+          {
+            "title": "Working with Data",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/06-Working-with-Data_fa.m4a",
+            "seconds": 1460
+          },
+          {
+            "title": "Software Architecture",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/07-Software-Architecture_fa.m4a",
+            "seconds": 918
+          },
+          {
+            "title": "To Production",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/08-To-Production_fa.m4a",
+            "seconds": 1330
+          },
+          {
+            "title": "Powering Up Your Productivity",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/09-Powering-Up-Your-Productivity_fa.m4a",
+            "seconds": 1113
+          },
+          {
+            "title": "Mastering Soft Skills in the Tech World",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/10-Mastering-Soft-Skills-in-the-Tech-World_fa.m4a",
+            "seconds": 1354
+          },
+          {
+            "title": "Career Management",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/11-Career-Management_fa.m4a",
+            "seconds": 1473
+          },
+          {
+            "title": "The AI Powered Software Engineer",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/12-The-AI-Powered-Software-Engineer_fa.m4a",
+            "seconds": 957
+          }
+        ]
+      },
+      "zips": {
+        "Persian": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/fundamentals-of-software-engineering-from-coder-to-engineer-fa.zip",
+          "bytes": 146376993,
+          "count": 14
+        }
+      },
+      "published_at": "2026-10-19T05:36:22Z"
+    },
+    {
       "slug": "learningdomain-drivendesign",
       "title": "LearningDomain DrivenDesign",
       "episodes": {

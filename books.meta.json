@@ -1233,5 +1233,115 @@
         "title_fa": ""
       }
     }
+  },
+  "fundamentals-of-software-engineering-from-coder-to-engineer": {
+    "title_en": "Fundamentals of Software Engineering",
+    "title_fa": "مبانی مهندسی نرم‌افزار",
+    "author": "Nathaniel Schutta & Dan Vega",
+    "cover": "covers/Fundamentals of Software Engineering book cover.jpg",
+    "note_en": "",
+    "note_fa": "",
+    "translated_fa": null,
+    "categories": [
+      "software-engineering",
+      "productivity-career"
+    ],
+    "chapters": {
+      "00-Programmer-to-Engineer": {
+        "title_en": "Programmer to Engineer",
+        "title_fa": ""
+      },
+      "01-Writing-Code": {
+        "title_en": "Writing Code",
+        "title_fa": ""
+      },
+      "02-Modeling": {
+        "title_en": "Modeling",
+        "title_fa": ""
+      },
+      "03-Automated-Testing": {
+        "title_en": "Automated Testing",
+        "title_fa": ""
+      },
+      "04-Exploring-and-Modifying-Unfamiliar-Systems": {
+        "title_en": "Exploring and Modifying Unfamiliar Systems",
+        "title_fa": ""
+      },
+      "05-User-Interface-Design": {
+        "title_en": "User Interface Design",
+        "title_fa": ""
+      },
+      "06-Working-with-Data": {
+        "title_en": "Working with Data",
+        "title_fa": ""
+      },
+      "07-Software-Architecture": {
+        "title_en": "Software Architecture",
+        "title_fa": ""
+      },
+      "08-To-Production": {
+        "title_en": "To Production",
+        "title_fa": ""
+      },
+      "09-Powering-Up-Your-Productivity": {
+        "title_en": "Powering Up Your Productivity",
+        "title_fa": ""
+      },
+      "10-Mastering-Soft-Skills-in-the-Tech-World": {
+        "title_en": "Mastering Soft Skills in the Tech World",
+        "title_fa": ""
+      },
+      "11-Career-Management": {
+        "title_en": "Career Management",
+        "title_fa": ""
+      },
+      "12-The-AI-Powered-Software-Engineer": {
+        "title_en": "The AI Powered Software Engineer",
+        "title_fa": ""
+      }
+    }
+  },
+  "how-not-to-be-wrong-the-power-of-mathematical-thinking-jorda": {
+    "title_en": "How Not to Be Wrong",
+    "title_fa": "چگونه اشتباه نکنیم",
+    "author": "Jordan Ellenberg",
+    "cover": "covers/How Not to Be Wrong Jordan Ellenberg book cover.jpg",
+    "note_en": "",
+    "note_fa": "",
+    "translated_fa": null,
+    "categories": [
+      "statistics-mathematics",
+      "thinking-decisions"
+    ],
+    "chapters": {
+      "00-WHEN-AM-I-GOING-TO-USE-THIS": {
+        "title_en": "WHEN AM I GOING TO USE THIS",
+        "title_fa": ""
+      },
+      "01-PART-I-Linearity": {
+        "title_en": "PART I Linearity",
+        "title_fa": ""
+      },
+      "02-PART-II-Inference": {
+        "title_en": "PART II Inference",
+        "title_fa": ""
+      },
+      "03-PART-III-Expectation": {
+        "title_en": "PART III Expectation",
+        "title_fa": ""
+      },
+      "04-PART-IV-Regression": {
+        "title_en": "PART IV Regression",
+        "title_fa": ""
+      },
+      "05-PART-V-Existence": {
+        "title_en": "PART V Existence",
+        "title_fa": ""
+      },
+      "06-HOW-TO-BE-RIGHT": {
+        "title_en": "HOW TO BE RIGHT",
+        "title_fa": ""
+      }
+    }
   }
 }
