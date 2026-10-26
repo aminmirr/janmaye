@@ -190,6 +190,78 @@
       "slug": "fundamentals-of-software-engineering-from-coder-to-engineer",
       "title": "Fundamentals of Software Engineering From Coder to Engineer ",
       "episodes": {
+        "English": [
+          {
+            "title": "Full-book overview",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/whole_book_en.m4a",
+            "seconds": 1585
+          },
+          {
+            "title": "Programmer to Engineer",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/00-Programmer-to-Engineer_en.m4a",
+            "seconds": 1438
+          },
+          {
+            "title": "Writing Code",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/01-Writing-Code_en.m4a",
+            "seconds": 1550
+          },
+          {
+            "title": "Modeling",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/02-Modeling_en.m4a",
+            "seconds": 1462
+          },
+          {
+            "title": "Automated Testing",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/03-Automated-Testing_en.m4a",
+            "seconds": 1413
+          },
+          {
+            "title": "Exploring and Modifying Unfamiliar Systems",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/04-Exploring-and-Modifying-Unfamiliar-Systems_en.m4a",
+            "seconds": 1358
+          },
+          {
+            "title": "User Interface Design",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/05-User-Interface-Design_en.m4a",
+            "seconds": 1607
+          },
+          {
+            "title": "Working with Data",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/06-Working-with-Data_en.m4a",
+            "seconds": 1521
+          },
+          {
+            "title": "Software Architecture",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/07-Software-Architecture_en.m4a",
+            "seconds": 1739
+          },
+          {
+            "title": "To Production",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/08-To-Production_en.m4a",
+            "seconds": 1692
+          },
+          {
+            "title": "Powering Up Your Productivity",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/09-Powering-Up-Your-Productivity_en.m4a",
+            "seconds": 1335
+          },
+          {
+            "title": "Mastering Soft Skills in the Tech World",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/10-Mastering-Soft-Skills-in-the-Tech-World_en.m4a",
+            "seconds": 1272
+          },
+          {
+            "title": "Career Management",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/11-Career-Management_en.m4a",
+            "seconds": 826
+          },
+          {
+            "title": "The AI Powered Software Engineer",
+            "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/12-The-AI-Powered-Software-Engineer_en.m4a",
+            "seconds": 879
+          }
+        ],
         "Persian": [
           {
             "title": "Full-book overview",
@@ -264,6 +336,11 @@
         ]
       },
       "zips": {
+        "English": {
+          "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/fundamentals-of-software-engineering-from-coder-to-engineer-en.zip",
+          "bytes": 165612628,
+          "count": 14
+        },
         "Persian": {
           "url": "https://github.com/aminmirr/book-podcasts/releases/download/book-fundamentals-of-software-engineering-from-coder-to-engineer/fundamentals-of-software-engineering-from-coder-to-engineer-fa.zip",
           "bytes": 146376993,
